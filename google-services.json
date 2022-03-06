@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "162716646983",
+    "project_id": "appmiochat",
+    "storage_bucket": "appmiochat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162716646983:android:3acffb0bb7c0da4c907b62",
+        "android_client_info": {
+          "package_name": "com.example.appchatdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162716646983-k38sma1nn5vmkhk4b4c0eip4ft5jcdeo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appchatdemo",
+            "certificate_hash": "bb7746e129b8ab412e77aee259d0ba06e284a2a5"
+          }
+        },
+        {
+          "client_id": "162716646983-u4i91oiqmsref7oa50rihvh1lda8g9qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHHBm2Y-5BKZNFKDF3BdXrWKIwo5qwXTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162716646983-u4i91oiqmsref7oa50rihvh1lda8g9qr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

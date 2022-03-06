@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">AppChatDemo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+=======
+    <string name="log_in">Sign in</string>
+    <string name="select_user">Select User</string>
+    <string name="select_guest">Select Guest</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="log_in_to_your_account">Log in to your account</string>
+    <string name="create_account">Create account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="input_image">Input Image</string>
+    <string name="type_a_message">type a message</string>
+>>>>>>> origin/luong
+
+    <string name="forgot_password">Forgot password</string>
+    <string name="forgot_password_detail">Please enter your email account below</string>
+    <string name="sign_up">Sign up</string>
+    <string name="free_account">free account here</string>
+</resources>

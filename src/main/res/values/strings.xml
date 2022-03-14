@@ -3,24 +3,36 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-=======
-    <string name="log_in">Sign in</string>
+    <string name="log_in">Đăng ký</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="sign_out">Đăng xuất</string>
     <string name="select_user">Select User</string>
     <string name="select_guest">Select Guest</string>
-    <string name="create_new_account">Create new account</string>
+    <string name="create_new_account">Tạo tài khoản mới</string>
     <string name="welcome_back">Welcome back!</string>
-    <string name="log_in_to_your_account">Log in to your account</string>
-    <string name="create_account">Create account</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="password">Password</string>
+    <string name="log_in_to_your_account">Đăng nhập bằng tài khoản của bạn</string>
+    <string name="create_account">Bạn chưa đăng ký ? </string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="password">Mật khẩu</string>
     <string name="email">Email</string>
-    <string name="name">Name</string>
+    <string name="name">Tên người dùng</string>
     <string name="input_image">Input Image</string>
-    <string name="type_a_message">type a message</string>
->>>>>>> origin/luong
+    <string name="type_a_message">Hãy nhập một tin nhắn</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="forgot_password_detail">Nhập email của bạn ở dưới </string>
+    <string name="messenger">Tin nhắn</string>
+    <string name="group_name">Nhập tên nhóm</string>
+    <string name="add_group_member">Thêm thành viên</string>
+    <string name="add_group_chat">Tạo nhóm chat mới</string>
+    <string name="group_chat_name">Tên nhóm</string>
+    <string name="number_of_member">Số thành viên</string>
+    <string name="friend_name">Tên bạn</string>
+    <string name="user_name">Tên người dùng</string>
+    <string name="search_member">Tên người dùng</string>
+    <string name="update">Cập nhật</string>
+    <string name="search_user">Cập nhật</string>
+    <string name="welcome">Cập nhật</string>
+    <string name="group_created">Tạo nhóm</string>
 
-    <string name="forgot_password">Forgot password</string>
-    <string name="forgot_password_detail">Please enter your email account below</string>
-    <string name="sign_up">Sign up</string>
-    <string name="free_account">free account here</string>
+
 </resources>

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".fragment.SignOutFragment"
+    tools:context=".fragment.Login.SignOutFragment"
     android:gravity="center">
     <Button
         android:id="@+id/btn_sign_out"

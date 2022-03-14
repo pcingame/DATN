@@ -26,8 +26,6 @@ public class CustomProgress {
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.setContentView(R.layout.prograss_bar_dialog);
         mProgressBar = (ProgressBar) mDialog.findViewById(R.id.progress_bar);
-//          mProgressBar.getIndeterminateDrawable().setColorFilter(context.getResources()
-//         .getColor(R.color.material_blue_gray_500), PorterDuff.Mode.SRC_IN);
 
         TextView progressText = (TextView) mDialog.findViewById(R.id.progress_text);
         progressText.setText("" + message);

@@ -1,7 +1,11 @@
-package com.example.appchatdemo.fragment;
+package com.example.appchatdemo.fragment.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,11 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.DashBoardActivity;
@@ -36,9 +35,8 @@ public class SplashFragment extends Fragment {
             @Override
             public void run() {
                 if (viewModel.getCurrentUser() != null){
-                    navController.navigate(R.id.action_splashFragment_to_signOutFragment);
-//                    Intent intent = new Intent(getActivity(), DashBoardActivity.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), DashBoardActivity.class);
+                    startActivity(intent);
                 }else{
                     navController.navigate(R.id.action_splashFragment_to_signInFragment);
 

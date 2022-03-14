@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragment.SignInFragment"
-    android:padding="24dp">
+    android:padding="24dp"
+    tools:context=".fragment.Login.SignInFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_back"
-            android:textStyle="bold"
-            android:textSize="40sp"
+            android:paddingTop="70dp"
+            android:text="Omichat nghe"
             android:textColor="@color/teal_700"
-            android:paddingTop="70dp"/>
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edt_email_sign_in"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/background_textbox"
             android:hint="@string/email"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:drawablePadding="5dp"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textColor="@color/pencil"
-            android:textSize="16sp" />
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/edt_password_sign_in"
@@ -48,61 +51,68 @@
             android:inputType="textPassword"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textColor="@color/pencil"
-            android:textSize="16sp" />
+            android:textColor="@color/black"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="5dp"
+            android:textSize="20sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sign_in"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="@string/log_in"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/teal_700"/>
+            android:backgroundTint="@color/teal_700"
+            android:text="@string/sign_in"
+
+            android:enabled="false"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tv_forgot_password"
-                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:padding="10dp"
                 android:text="@string/forgot_password"
-                android:textColor="@android:color/holo_green_dark">
-            </TextView>
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp"></TextView>
+
             <LinearLayout
                 android:id="@+id/layout_sign_up"
-                android:padding="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_account"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"></TextView>
+
                 <TextView
                     android:id="@+id/tv_sign_up"
-                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:text="@string/sign_up">
-                </TextView>
-                <TextView
                     android:layout_marginStart="3dp"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/free_account">
-                </TextView>
+                    android:text="@string/log_in"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="18sp"></TextView>
             </LinearLayout>
         </LinearLayout>
 
-
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

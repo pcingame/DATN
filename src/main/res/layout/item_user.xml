@@ -19,44 +19,44 @@
             app:layout_constraintTop_toTopOf="parent"
             app:riv_oval="true"/>
 
-<!--        <View-->
-<!--            android:id="@+id/support_view"-->
-<!--            android:layout_width="3dp"-->
-<!--            android:layout_height="3dp"-->
-<!--            app:layout_constraintLeft_toRightOf="@id/image_profile"-->
-<!--            app:layout_constraintTop_toTopOf="@id/image_profile"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/image_profile"-->
-<!--            />-->
+        <View
+            android:id="@+id/support_view"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
+            app:layout_constraintLeft_toRightOf="@id/guest_image"
+            app:layout_constraintTop_toTopOf="@id/guest_image"
+            app:layout_constraintBottom_toBottomOf="@id/guest_image"
+            />
 
-<!--        <TextView-->
-<!--            android:id="@+id/guest_name"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:ellipsize="end"-->
-<!--            android:maxLines="1"-->
-<!--            android:textColor="@color/purple_700"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_marginLeft="8dp"-->
-<!--            android:layout_marginRight="8dp"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/support_view"-->
-<!--            app:layout_constraintLeft_toRightOf="@id/image_profile"-->
-<!--            app:layout_constraintRight_toRightOf="parent"/>-->
+        <TextView
+            android:id="@+id/guest_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/purple_700"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toTopOf="@id/support_view"
+            app:layout_constraintLeft_toRightOf="@id/guest_image"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/guest_email"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:ellipsize="end"-->
-<!--            android:maxLines="1"-->
-<!--            android:textColor="@color/purple_700"-->
-<!--            android:textSize="13sp"-->
-<!--            android:textStyle="italic"-->
-<!--            android:layout_marginLeft="8dp"-->
-<!--            android:layout_marginRight="8dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/support_view"-->
-<!--            app:layout_constraintLeft_toRightOf="@id/image_profile"-->
-<!--            app:layout_constraintRight_toRightOf="parent"/>-->
+        <TextView
+            android:id="@+id/guest_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/purple_700"
+            android:textSize="13sp"
+            android:textStyle="italic"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintTop_toBottomOf="@id/support_view"
+            app:layout_constraintLeft_toRightOf="@id/guest_image"
+            app:layout_constraintRight_toRightOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

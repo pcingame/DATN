@@ -11,4 +11,9 @@
     <color name="text_box">#cccccc</color>
     <color name="pencil">#99000000</color>
     <color name="error">#FF8B0000</color>
+    <color name="ftb">#FFEB3B</color>
+
+    <item name="cardBackground" type="color">#f6f6f6</item>
+    <color name="edittextColor">#DDDDDD</color>
+    <color name="textColor">#999DA4</color>
 </resources>

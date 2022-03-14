@@ -7,9 +7,6 @@ public class UserModel {
     private String username;
     private String status;
 
-    public UserModel() {
-    }
-
     public UserModel(String userId, String imageUrl, String username, String status) {
         this.userId = userId;
         this.imageUrl = imageUrl;

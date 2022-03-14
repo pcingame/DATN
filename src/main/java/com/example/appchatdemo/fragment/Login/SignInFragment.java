@@ -1,7 +1,15 @@
-package com.example.appchatdemo.fragment;
+package com.example.appchatdemo.fragment.Login;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,14 +18,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
+import com.example.appchatdemo.CustomProgress;
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.activities.DashBoardActivity;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,17 +29,22 @@ import java.util.Objects;
 
 public class SignInFragment extends Fragment {
 
-
-    private EditText edtEmail, edtPassword, edtFullName, edtRePassword;
-    private Button btnSignIn;
-    private TextView tvSignUp, tvForgotPassword;
-    //private ProgressDialog progressDialogSignIn;
+    private EditText edtEmail, edtPassword;
     private AuthViewModel viewModel;
     private NavController navController;
+    CustomProgress customProgress = CustomProgress.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                exitApplication();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.
                 getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(AuthViewModel.class);
@@ -45,27 +53,14 @@ public class SignInFragment extends Fragment {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if(firebaseUser != null){
-                    navController.navigate(R.id.action_signInFragment_to_signOutFragment);
+                    Intent intent = new Intent(getActivity(), DashBoardActivity.class);
+                    startActivity(intent);
                 }
             }
         });
 
-        //observeLogin();
     }
 
-//    private void observeLogin() {
-//        viewModel.setProgressbarObservable().observe(this, new  Observer<Boolean>() {
-//            @Override
-//            public void onChanged(final Boolean progressObserve) {
-//                if(progressObserve){
-//                  // show your progress
-//                }
-//                else {
-//                   // hide your progress
-//                }
-//            }
-//        });
-    //   }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,10 +74,9 @@ public class SignInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         edtEmail = view.findViewById(R.id.edt_email_sign_in);
         edtPassword = view.findViewById(R.id.edt_password_sign_in);
-        tvSignUp = view.findViewById(R.id.tv_sign_up);
-        btnSignIn = view.findViewById(R.id.btn_sign_in);
-        tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
-        //progressDialogSignIn = new ProgressDialog(getContext());
+        TextView tvSignUp = view.findViewById(R.id.tv_sign_up);
+        Button btnSignIn = view.findViewById(R.id.btn_sign_in);
+        TextView tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
 
         navController = Navigation.findNavController(view);
 
@@ -106,17 +100,19 @@ public class SignInFragment extends Fragment {
 
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
-//                progressDialogSignIn.setTitle("Loading...");
-//                progressDialogSignIn.setCancelable(false);
-//                progressDialogSignIn.show();
 
+                customProgress.showProgress(getContext(), "Loading...", true);
                 if(!email.isEmpty() && !password.isEmpty()){
-                    // Toast.makeText(getContext(), "a", Toast.LENGTH_SHORT).show();
-                    //progressDialogSignIn.dismiss();
+
                     viewModel.signIn(email, password);
-                    //  progressDialog.dismiss();
+
                 }
             }
         });
     }
+
+    private void exitApplication() {
+
+    }
+
 }

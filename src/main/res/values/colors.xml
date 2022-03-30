@@ -12,6 +12,7 @@
     <color name="pencil">#99000000</color>
     <color name="error">#FF8B0000</color>
     <color name="ftb">#FFEB3B</color>
+    <color name="camera">#7E7D7A</color>
 
     <item name="cardBackground" type="color">#f6f6f6</item>
     <color name="edittextColor">#DDDDDD</color>

@@ -21,18 +21,61 @@
     <string name="forgot_password">Quên mật khẩu</string>
     <string name="forgot_password_detail">Nhập email của bạn ở dưới </string>
     <string name="messenger">Tin nhắn</string>
-    <string name="group_name">Nhập tên nhóm</string>
+    <string name="group_name">Nhập tên group</string>
     <string name="add_group_member">Thêm thành viên</string>
-    <string name="add_group_chat">Tạo nhóm chat mới</string>
+    <string name="add_group_chat">Tạo hội thoại</string>
     <string name="group_chat_name">Tên nhóm</string>
     <string name="number_of_member">Số thành viên</string>
     <string name="friend_name">Tên bạn</string>
     <string name="user_name">Tên người dùng</string>
-    <string name="search_member">Tên người dùng</string>
+    <string name="search_member">Tìm kiếm thành viên</string>
     <string name="update">Cập nhật</string>
-    <string name="search_user">Cập nhật</string>
-    <string name="welcome">Cập nhật</string>
-    <string name="group_created">Tạo nhóm</string>
+    <string name="search_user">Tìm kiếm người dùng</string>
+    <string name="welcome">Chào mừng</string>
+    <string name="group_created">Thêm thành viên</string>
+    <string name="option">Tiện ích</string>
+    <string name="np">NP</string>
+    <string name="project">Dự án</string>
+    <string name="loading">Đang tải…</string>
+    <string name="sending">Đang gửi…</string>
+    <string name="checking">Đang kiếm tra…</string>
+    <string name="regex_username">[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ?]*</string>
+    <string name="forgot_enter_name">Bạn quên nhập tên kìa</string>
+    <string name="regex_username_error">Tên người dùng không được chứa ký tự đặc biệt</string>
+    <string name="username_lenght_error">Tên người dùng không được vượt quá 50 ký tự</string>
+    <string name="empty_email_error">Bạn quên nhập email kìa</string>
+    <string name="empty_password_error">Mật khẩu không được để trống</string>
+    <string name="empty_confirm_password_error">Vui lòng xác nhận mật khẩu</string>
+    <string name="regex_password">[a-zA-Z0-9_?]*</string>
+    <string name="regex_password_error">Độ dài mật khẩu nằm trong khoảng 6 đến 30 ký tự và không chứa ký tự đặc biệt</string>
+    <string name="pass_dif_cpass_error">Mật khẩu không giống</string>
+    <string name="signing_up">Đang đăng ký…</string>
+    <string name="update_profile_success">Cập nhật thông tin thành công</string>
+    <string name="update_profile_fail">Cập nhật thông tin thất bại</string>
+    <string name="profile_title_dialog">Bạn có muốn cập nhật thông tin cá nhân không ?</string>
+    <string name="exit_title_dialog">Bạn có muốn thoát ứng dụng không ?</string>
+    <string name="update_ok">Bấm OK để cập nhật</string>
+    <string name="exit_ok">Bấm OK để thoát !</string>
+    <string name="message">Tin nhắn</string>
+    <string name="invalid_information">Thông tin không hợp lệ</string>
+    <string name="list_user">Danh sách người dùng</string>
+    <string name="sign_up_success">Đăng ký thành công</string>
+    <string name="used_email_el">The email address is already in use by another account.</string>
+    <string name="used_email_vn">Tài khoản đã được sử dụng</string>
+    <string name="format_email_el">The email address is badly formatted.</string>
+    <string name="format_email_vn">Địa chỉ email bị sai định dạng</string>
+    <string name="block_request_el">We have blocked all requests from this device due to unusual activity. Try again later.</string>
+    <string name="block_request_vn">Chúng tôi đã chặn tất cả các yêu cầu từ thiết bị này do hoạt động bất thường. Thử lại sau</string>
+    <string name="invalid_password_el">The password is invalid or the user does not have a password.</string>
+    <string name="invalid_passwrd_vn">Mật khẩu không hợp lệ hoặc nhập sai mật khẩu</string>
+    <string name="exist_account_el">There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="exist_account_vn">Vui lòng kiểm tra lại mail</string>
+    <string name="exist_account_login_vn">Sai thông tin đăng nhập</string>
+    <string name="send_reset_password_success">"Vui lòng kiểm tra email của bạn \nHệ thống đã gửi đường link làm mới mật khẩu đến email của bạn"</string>
+    <string name="no_data">Chưa có dữ liệu</string>
+    <string name="file_size">Dung lượng file vượt quá 20MB</string>
+
+
 
 
 </resources>

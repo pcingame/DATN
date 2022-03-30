@@ -21,6 +21,7 @@ import com.example.appchatdemo.CustomProgress;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.firebase.auth.FirebaseUser;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.Objects;
 
@@ -29,9 +30,10 @@ public class SignUpFragment extends Fragment {
     private EditText edtEmail, edtPassword, edtFullName, edtConfirmPassword;
     private Button btnCreateAccount;
     private TextView tvSignIn;
-    private AuthViewModel viewModel;
+    private AuthViewModel authViewModel;
     private NavController navController;
     CustomProgress customProgress = CustomProgress.getInstance();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,10 @@ public class SignUpFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
-        viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.
+        authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.
                 getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(AuthViewModel.class);
 
-        viewModel.getUserData().observe(this, new Observer<FirebaseUser>() {
+        authViewModel.getUserData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
@@ -96,35 +98,49 @@ public class SignUpFragment extends Fragment {
                 String confirmPassword = edtConfirmPassword.getText().toString().trim();
 
                 if (name.isEmpty()) {
-                    edtFullName.setError("Enter a name");
+                    edtFullName.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+
+                else if (!name.matches(getString(R.string.regex_username))){
+                    edtFullName.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+
+                else if(name.length() > 50){
+                    edtFullName.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if (email.isEmpty()) {
-                    edtFullName.setError("Enter a email");
+                    edtEmail.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if (password.isEmpty()) {
-                    edtFullName.setError("Enter a password");
+                    edtPassword.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if (confirmPassword.isEmpty()) {
-                    edtFullName.setError("Enter a password");
+                    edtConfirmPassword.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
-                else if (password.length() < 6) {
-                    edtPassword.setError("Password length must be 6 or more characters");
+                else if (password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))) {
+                    edtPassword.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if (!password.equals(confirmPassword)){
-                    edtConfirmPassword.setError("Incorrect password");
+                    edtConfirmPassword.setError("");
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else {
-                    customProgress.showProgress(getContext(), "Signing up...", true);
-
-                    viewModel.register(name, email, password);
+                    customProgress.showProgress(getContext(), getString(R.string.signing_up), true);
+                    authViewModel.register(name, email, password);
                 }
-
 
             }
         });

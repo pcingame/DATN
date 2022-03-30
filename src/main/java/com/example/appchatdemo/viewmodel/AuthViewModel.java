@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.NavController;
 
 import com.example.appchatdemo.repositories.AuthenticationRepository;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,12 +47,10 @@ public class AuthViewModel extends AndroidViewModel{
         authenticationRepository.login(email, password);
     }
 
-    public void forgotPassword(String email){
-        authenticationRepository.forgotPassword(email);
-    }
 
     public void signOut(){
         authenticationRepository.signOut();
     }
+
 
 }

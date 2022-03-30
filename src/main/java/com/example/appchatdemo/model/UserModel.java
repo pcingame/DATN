@@ -1,17 +1,24 @@
 package com.example.appchatdemo.model;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
 
     private String userId;
     private String imageUrl;
     private String username;
     private String status;
+    private String activeStatus;
 
-    public UserModel(String userId, String imageUrl, String username, String status) {
+    public UserModel() {
+    }
+
+    public UserModel(String userId, String imageUrl, String username, String status, String activeStatus) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.username = username;
         this.status = status;
+        this.activeStatus = activeStatus;
     }
 
     public String getUserId() {
@@ -44,5 +51,13 @@ public class UserModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(String activeStatus) {
+        this.activeStatus = activeStatus;
     }
 }

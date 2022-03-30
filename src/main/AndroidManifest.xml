@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.appchatdemo">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo_removebg_preview"
@@ -17,9 +22,6 @@
             android:exported="false" />
         <activity
             android:name=".activities.GroupMessageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.CreatGroupChatActivity"
             android:exported="false" />
         <activity
             android:name=".activities.DashBoardActivity"

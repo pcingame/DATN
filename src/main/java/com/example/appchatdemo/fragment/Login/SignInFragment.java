@@ -2,12 +2,15 @@ package com.example.appchatdemo.fragment.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -23,6 +26,7 @@ import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.DashBoardActivity;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.firebase.auth.FirebaseUser;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.Objects;
 
@@ -32,6 +36,8 @@ public class SignInFragment extends Fragment {
     private EditText edtEmail, edtPassword;
     private AuthViewModel viewModel;
     private NavController navController;
+    private Button btnSignIn;
+    private TextView tvSignUp, tvForgotPassword;
     CustomProgress customProgress = CustomProgress.getInstance();
 
     @Override
@@ -74,11 +80,14 @@ public class SignInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         edtEmail = view.findViewById(R.id.edt_email_sign_in);
         edtPassword = view.findViewById(R.id.edt_password_sign_in);
-        TextView tvSignUp = view.findViewById(R.id.tv_sign_up);
-        Button btnSignIn = view.findViewById(R.id.btn_sign_in);
-        TextView tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
+        tvSignUp = view.findViewById(R.id.tv_sign_up);
+        btnSignIn = view.findViewById(R.id.btn_sign_in);
+        tvForgotPassword = view.findViewById(R.id.tv_forgot_password);
 
         navController = Navigation.findNavController(view);
+
+        edtPassword.addTextChangedListener(loginTextWatcher);
+        edtEmail.addTextChangedListener(loginTextWatcher);
 
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,13 +109,18 @@ public class SignInFragment extends Fragment {
 
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
+                String emailPattern2 = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+.+[a-z]+";
 
-                customProgress.showProgress(getContext(), "Loading...", true);
-                if(!email.isEmpty() && !password.isEmpty()){
-
-                    viewModel.signIn(email, password);
-
+                if ( !email.matches(emailPattern2) || email.isEmpty()){
+                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }else if(password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))){
+                    FancyToast.makeText(getContext(), getString(R.string.exist_account_login_vn), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
+                else {
+                    customProgress.showProgress(getContext(), getString(R.string.loading), true);
+                    viewModel.signIn(email, password);
+                }
+
             }
         });
     }
@@ -114,5 +128,25 @@ public class SignInFragment extends Fragment {
     private void exitApplication() {
 
     }
+
+    private TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String email = edtEmail.getText().toString().trim();
+            String password = edtPassword.getText().toString().trim();
+            btnSignIn.setEnabled(!email.isEmpty() && !password.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
 
 }

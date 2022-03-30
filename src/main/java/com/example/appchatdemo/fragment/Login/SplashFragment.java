@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class SplashFragment extends Fragment {
 
-    private AuthViewModel viewModel;
+    private AuthViewModel authViewModel;
     private NavController navController;
 
     @Override
@@ -34,7 +34,7 @@ public class SplashFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (viewModel.getCurrentUser() != null){
+                if (authViewModel.getCurrentUser() != null){
                     Intent intent = new Intent(getActivity(), DashBoardActivity.class);
                     startActivity(intent);
                 }else{
@@ -59,7 +59,7 @@ public class SplashFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new ViewModelProvider(this , ViewModelProvider.AndroidViewModelFactory
+        authViewModel = new ViewModelProvider(this , ViewModelProvider.AndroidViewModelFactory
                 .getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(AuthViewModel.class);
         navController = Navigation.findNavController(view);
     }

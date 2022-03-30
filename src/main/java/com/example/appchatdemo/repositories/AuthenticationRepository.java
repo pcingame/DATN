@@ -1,11 +1,25 @@
 package com.example.appchatdemo.repositories;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.appchatdemo.CustomProgress;
+import com.example.appchatdemo.R;
+import com.example.appchatdemo.fragment.Login.ForgotPasswordFragment;
+import com.example.appchatdemo.fragment.Login.SignInFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +38,7 @@ public class AuthenticationRepository {
     private final FirebaseAuth auth;
     private final FirebaseFirestore fireStore;
     private String userId;
-
+    private String imgLinkDefaultAvatar = "https://firebasestorage.googleapis.com/v0/b/appmiochat.appspot.com/o/logo.png?alt=media&token=7e409ee9-6038-45b9-b365-206072a56490";
     CustomProgress customProgress = CustomProgress.getInstance();
 
 
@@ -38,6 +52,7 @@ public class AuthenticationRepository {
         if (auth.getCurrentUser() != null) {
             firebaseUserMutableLiveData.postValue(auth.getCurrentUser());
         }
+
     }
 
     public MutableLiveData<FirebaseUser> getFirebaseUserMutableLiveData() {
@@ -67,8 +82,9 @@ public class AuthenticationRepository {
 
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("userId", userId);
-                    hashMap.put("imageUrl", "default");
+                    hashMap.put("imageUrl", imgLinkDefaultAvatar);
                     hashMap.put("status", "offline");
+                    hashMap.put("activeStatus", "offline");
                     hashMap.put("username", name);
 
                     fireStore.collection("Users").document(userId).set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -77,12 +93,20 @@ public class AuthenticationRepository {
 
                         }
                     });
-                    //Toast.makeText(application, "Signed up", Toast.LENGTH_SHORT).show();
-                    FancyToast.makeText(application,"Signed up",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
+
+                    FancyToast.makeText(application, application.getString(R.string.sign_up_success), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                 } else {
                     customProgress.hideProgress();
-                    //Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    FancyToast.makeText(application,task.getException().getMessage(),FancyToast.LENGTH_SHORT,FancyToast.ERROR,false).show();
+                    String a = task.getException().getMessage();
+                    if (a.equals(application.getString(R.string.used_email_el))) {
+                        a = application.getString(R.string.used_email_vn);
+                    } else if (a.equals(application.getString(R.string.format_email_el))) {
+                        a = application.getString(R.string.invalid_information);
+                    } else if (a.equals(application.getString(R.string.block_request_el))) {
+                        a = application.getString(R.string.block_request_vn);
+                    }
+                    FancyToast.makeText(application, a, FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+
                 }
             }
         });
@@ -98,34 +122,29 @@ public class AuthenticationRepository {
                     firebaseUserMutableLiveData.postValue(auth.getCurrentUser());
                 } else {
                     customProgress.hideProgress();
-                   // Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    FancyToast.makeText(application,task.getException().getMessage(),FancyToast.LENGTH_SHORT,FancyToast.ERROR,false).show();
+                    String b = task.getException().getMessage();
+
+                    if (b.equals(application.getString(R.string.invalid_password_el))) {
+                        b = application.getString(R.string.exist_account_login_vn);
+                    } else if (b.equals(application.getString(R.string.exist_account_el))) {
+                        b = application.getString(R.string.exist_account_login_vn);
+                    } else if (b.equals(application.getString(R.string.block_request_el))) {
+                        b = application.getString(R.string.block_request_vn);
+                    }else if(b.equals(application.getString(R.string.format_email_el))){
+                        b = application.getString(R.string.invalid_information);
+                    }
+
+                    FancyToast.makeText(application, b, FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         });
     }
 
-    public void forgotPassword(String email) {
-
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    customProgress.hideProgress();
-                   // Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                   // FancyToast.makeText(application,task.getException().getMessage(),FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
-                    FancyToast.makeText(application,"Vui lòng kiểm tra email của bạn",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
-                } else {
-                    customProgress.hideProgress();
-                    //Toast.makeText(application.getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    FancyToast.makeText(application,task.getException().getMessage(),FancyToast.LENGTH_SHORT,FancyToast.ERROR,false).show();
-                }
-            }
-        });
-    }
 
     public void signOut() {
         auth.signOut();
         userLogged.postValue(true);
     }
+
+
 }

@@ -10,8 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appchatdemo.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
+
+    FirebaseFirestore fireStore;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,4 +32,6 @@ public class MainActivity extends AppCompatActivity {
     public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
         return super.onCreateView(name, context, attrs);
     }
+
+
 }

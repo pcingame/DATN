@@ -18,21 +18,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/logo_no_background" />
 
-<!--        <EditText-->
-<!--            android:id="@+id/edt_email_sign_in"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="@drawable/background_textbox"-->
-<!--            android:drawableStart="@drawable/ic_baseline_email_24"-->
-<!--            android:drawablePadding="5dp"-->
-<!--            android:hint="@string/email"-->
-<!--            android:imeOptions="actionNext"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="textEmailAddress"-->
-<!--            android:paddingLeft="16dp"-->
-<!--            android:paddingRight="16dp"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="20sp" />-->
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -72,23 +58,6 @@
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--<EditText
-            android:id="@+id/edt_password_sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/background_textbox"
-            android:drawableStart="@drawable/ic_baseline_lock_24"
-            android:drawableLeft="@drawable/ic_baseline_lock_24"
-            android:drawablePadding="5dp"
-            android:hint="@string/password"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sign_in"

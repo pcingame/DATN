@@ -42,7 +42,7 @@
     <string name="regex_username">[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ?]*</string>
     <string name="forgot_enter_name">Bạn quên nhập tên kìa</string>
     <string name="regex_username_error">Tên người dùng không được chứa ký tự đặc biệt</string>
-    <string name="username_lenght_error">Tên người dùng không được vượt quá 50 ký tự</string>
+    <string name="username_length_error">Tên người dùng không được vượt quá 50 ký tự</string>
     <string name="empty_email_error">Bạn quên nhập email kìa</string>
     <string name="empty_password_error">Mật khẩu không được để trống</string>
     <string name="empty_confirm_password_error">Vui lòng xác nhận mật khẩu</string>
@@ -75,6 +75,11 @@
     <string name="no_data">Chưa có dữ liệu</string>
     <string name="file_size">Dung lượng file vượt quá 20MB</string>
     <string name="logout">Đăng xuất</string>
+    <string name="password_length">Mật khẩu phải có ít nhất 6 kí tự</string>
+    <string name="validate_name">Bạn cần nhập tên người dùng</string>
+    <string name="validate_email">Bạn cần nhập email</string>
+    <string name="validate_password">Mật khẩu phải có ít nhất 6 kí tự</string>
+    <string name="validate_repassword">Mật khẩu phải có ít nhất 6 kí tự</string>
 
 
 

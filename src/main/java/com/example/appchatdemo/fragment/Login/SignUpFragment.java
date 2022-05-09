@@ -20,6 +20,7 @@ import androidx.navigation.Navigation;
 import com.example.appchatdemo.CustomProgress;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseUser;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
@@ -32,6 +33,7 @@ public class SignUpFragment extends Fragment {
     private TextView tvSignIn;
     private AuthViewModel authViewModel;
     private NavController navController;
+    private TextInputLayout textInputName, textInputEmail, textInputPassword, textInputRePassword;
     CustomProgress customProgress = CustomProgress.getInstance();
 
 
@@ -48,7 +50,7 @@ public class SignUpFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.
-                getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(AuthViewModel.class);
+                getInstance(requireActivity().getApplication())).get(AuthViewModel.class);
 
         authViewModel.getUserData().observe(this, new Observer<FirebaseUser>() {
             @Override
@@ -78,6 +80,10 @@ public class SignUpFragment extends Fragment {
         edtConfirmPassword = view.findViewById(R.id.edt_confirm_password_sign_up);
         tvSignIn = view.findViewById(R.id.tv_sign_in);
         btnCreateAccount = view.findViewById(R.id.btn_create_acc);
+        textInputName = view.findViewById(R.id.text_input_name_sign_up);
+        textInputEmail = view.findViewById(R.id.text_input_email_sign_up);
+        textInputPassword = view.findViewById(R.id.text_input_password_sign_up);
+        textInputRePassword = view.findViewById(R.id.text_input_confirm_password_sign_up);
 
         navController = Navigation.findNavController(view);
 
@@ -98,27 +104,27 @@ public class SignUpFragment extends Fragment {
                 String confirmPassword = edtConfirmPassword.getText().toString().trim();
 
                 if (name.isEmpty()) {
-                    edtFullName.setError("");
+                    textInputName.setError(getString(R.string.validate_name));
                     FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if (!name.matches(getString(R.string.regex_username))){
-                    edtFullName.setError("");
+                    textInputEmail.setError(getString(R.string.regex_username_error));
                     FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if(name.length() > 50){
-                    edtFullName.setError("");
+                    textInputName.setError(getString(R.string.username_length_error));
                     FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if (email.isEmpty()) {
-                    edtEmail.setError("");
+                    textInputEmail.setError(getString(R.string.validate_password));
                     FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 
                 else if (password.isEmpty()) {
-                    edtPassword.setError("");
+                    textInputPassword.setError(getString(R.string.validate_repassword));
                     FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
 

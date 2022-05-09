@@ -74,6 +74,7 @@
     <string name="send_reset_password_success">"Vui lòng kiểm tra email của bạn \nHệ thống đã gửi đường link làm mới mật khẩu đến email của bạn"</string>
     <string name="no_data">Chưa có dữ liệu</string>
     <string name="file_size">Dung lượng file vượt quá 20MB</string>
+    <string name="logout">Đăng xuất</string>
 
 
 

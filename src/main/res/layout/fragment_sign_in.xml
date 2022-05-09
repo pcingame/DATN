@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="24dp"
     tools:context=".fragment.Login.SignInFragment">
 
@@ -12,38 +13,74 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="70dp"
-            android:text="Omichat nghe"
-            android:textColor="@color/teal_700"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:src="@drawable/logo_no_background" />
 
-        <EditText
-            android:id="@+id/edt_email_sign_in"
+<!--        <EditText-->
+<!--            android:id="@+id/edt_email_sign_in"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:background="@drawable/background_textbox"-->
+<!--            android:drawableStart="@drawable/ic_baseline_email_24"-->
+<!--            android:drawablePadding="5dp"-->
+<!--            android:hint="@string/email"-->
+<!--            android:imeOptions="actionNext"-->
+<!--            android:importantForAutofill="no"-->
+<!--            android:inputType="textEmailAddress"-->
+<!--            android:paddingLeft="16dp"-->
+<!--            android:paddingRight="16dp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="20sp" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/background_textbox"
-            android:hint="@string/email"
-            android:drawableStart="@drawable/ic_baseline_email_24"
-            android:drawablePadding="5dp"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/edt_email_sign_in"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:textColor="@color/black"
+                android:hint="@string/email"
+                android:backgroundTint="@color/white"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24"
+            app:passwordToggleTint="@color/pencil">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_password_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:textColor="@color/black"
+                android:hint="@string/password"
+                android:backgroundTint="@color/white"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--<EditText
             android:id="@+id/edt_password_sign_in"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/background_textbox"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="5dp"
             android:hint="@string/password"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
@@ -51,20 +88,19 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:textColor="@color/black"
-            android:drawableStart="@drawable/ic_baseline_lock_24"
-            android:drawableLeft="@drawable/ic_baseline_lock_24"
-            android:drawablePadding="5dp"
-            android:textSize="20sp" />
+            android:textSize="20sp" />-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sign_in"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/teal_700"
-            android:text="@string/sign_in"
-
+            android:backgroundTint="@color/background_app"
             android:enabled="false"
+            android:text="@string/sign_in"
+            android:imeOptions="actionGo"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -99,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/create_account"
                     android:textColor="@color/black"
-                    android:textSize="18sp"></TextView>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_sign_up"
@@ -108,7 +144,7 @@
                     android:layout_marginStart="3dp"
                     android:text="@string/log_in"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:textSize="18sp"></TextView>
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 

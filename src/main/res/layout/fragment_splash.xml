@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#F0F3F9"
     tools:context=".fragment.Login.SplashFragment">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo_removebg_preview"/>
+        android:src="@drawable/logo_new"/>
 
 
 </LinearLayout>

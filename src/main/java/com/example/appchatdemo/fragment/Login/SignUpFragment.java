@@ -126,10 +126,12 @@ public class SignUpFragment extends Fragment {
             showMessageErrorScreen(textInputName, getString(R.string.regex_username_error), getString(R.string.invalid_information));
             return false;
         } else textInputName.setErrorEnabled(false);
+
         if (name.length() > 50) {
             showMessageErrorScreen(textInputName, getString(R.string.username_length_error), getString(R.string.invalid_information));
             return false;
         } else textInputName.setErrorEnabled(false);
+
         //Check empty
         if (
                 !validateEmpty(name, textInputName, getString(R.string.validate_name), getString(R.string.invalid_information)) ||
@@ -139,14 +141,18 @@ public class SignUpFragment extends Fragment {
         )
             return false;
 
+
+
         if (password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))) {
             showMessageErrorScreen(textInputPassword, getString(R.string.regex_password_error), getString(R.string.invalid_information));
             return false;
         } else textInputPassword.setErrorEnabled(false);
+
         if (!password.equals(confirmPassword)) {
-            showMessageErrorScreen(textInputPassword, getString(R.string.duplicate_password), getString(R.string.invalid_information));
+            showMessageErrorScreen(textInputRePassword, getString(R.string.duplicate_password), getString(R.string.invalid_information));
             return false;
-        } else textInputPassword.setErrorEnabled(false);
+        } else textInputRePassword.setErrorEnabled(false);
+
         return true;
     }
 

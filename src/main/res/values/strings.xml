@@ -78,6 +78,7 @@
     <string name="password_length">Mật khẩu phải có ít nhất 6 kí tự</string>
     <string name="validate_name">Bạn cần nhập tên người dùng</string>
     <string name="validate_email">Bạn cần nhập email</string>
+    <string name="duplicate_password">Mật khẩu trùng nhau</string>
     <string name="validate_password">Mật khẩu phải có ít nhất 6 kí tự</string>
     <string name="validate_repassword">Mật khẩu phải có ít nhất 6 kí tự</string>
 

@@ -35,6 +35,7 @@ public class SignUpFragment extends Fragment {
     private NavController navController;
     private TextInputLayout textInputName, textInputEmail, textInputPassword, textInputRePassword;
     CustomProgress customProgress = CustomProgress.getInstance();
+    private Boolean isAllFieldsChecked = false;
 
 
     @Override
@@ -101,56 +102,66 @@ public class SignUpFragment extends Fragment {
                 String name = edtFullName.getText().toString().trim();
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
-                String confirmPassword = edtConfirmPassword.getText().toString().trim();
 
-                if (name.isEmpty()) {
-                    textInputName.setError(getString(R.string.validate_name));
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
+                isAllFieldsChecked = CheckAllFields();
+                if (isAllFieldsChecked) {
 
-                else if (!name.matches(getString(R.string.regex_username))){
-                    textInputEmail.setError(getString(R.string.regex_username_error));
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-
-                else if(name.length() > 50){
-                    textInputName.setError(getString(R.string.username_length_error));
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-
-                else if (email.isEmpty()) {
-                    textInputEmail.setError(getString(R.string.validate_password));
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-
-                else if (password.isEmpty()) {
-                    textInputPassword.setError(getString(R.string.validate_repassword));
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-
-                else if (confirmPassword.isEmpty()) {
-                    edtConfirmPassword.setError("");
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-
-                else if (password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))) {
-                    edtPassword.setError("");
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-
-                else if (!password.equals(confirmPassword)){
-                    edtConfirmPassword.setError("");
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-
-                else {
                     customProgress.showProgress(getContext(), getString(R.string.signing_up), true);
                     authViewModel.register(name, email, password);
-                }
 
+                }
             }
+
         });
 
+    }
+
+    private boolean CheckAllFields() {
+        String name = edtFullName.getText().toString().trim();
+        String email = edtEmail.getText().toString().trim();
+        String password = edtPassword.getText().toString().trim();
+        String confirmPassword = edtConfirmPassword.getText().toString().trim();
+
+        if (!name.matches(getString(R.string.regex_username))) {
+            showMessageErrorScreen(textInputName, getString(R.string.regex_username_error), getString(R.string.invalid_information));
+            return false;
+        } else textInputName.setErrorEnabled(false);
+        if (name.length() > 50) {
+            showMessageErrorScreen(textInputName, getString(R.string.username_length_error), getString(R.string.invalid_information));
+            return false;
+        } else textInputName.setErrorEnabled(false);
+        //Check empty
+        if (
+                !validateEmpty(name, textInputName, getString(R.string.validate_name), getString(R.string.invalid_information)) ||
+                        !validateEmpty(email, textInputEmail, getString(R.string.validate_email), getString(R.string.invalid_information)) ||
+                        !validateEmpty(password, textInputPassword, getString(R.string.validate_password), getString(R.string.invalid_information)) ||
+                        !validateEmpty(confirmPassword, textInputRePassword, getString(R.string.validate_repassword), getString(R.string.invalid_information))
+        )
+            return false;
+
+        if (password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))) {
+            showMessageErrorScreen(textInputPassword, getString(R.string.regex_password_error), getString(R.string.invalid_information));
+            return false;
+        } else textInputPassword.setErrorEnabled(false);
+        if (!password.equals(confirmPassword)) {
+            showMessageErrorScreen(textInputPassword, getString(R.string.duplicate_password), getString(R.string.invalid_information));
+            return false;
+        } else textInputPassword.setErrorEnabled(false);
+        return true;
+    }
+
+    boolean validateEmpty(String field, TextInputLayout fieldScreen, String messageError, String messageInfo) {
+        if (field.isEmpty()) {
+            showMessageErrorScreen(fieldScreen, messageError, messageInfo);
+            return false;
+        }
+        fieldScreen.setErrorEnabled(false);
+        return true;
+    }
+
+    void showMessageErrorScreen(TextInputLayout fieldScreen, String messageError, String messageInfo) {
+        fieldScreen.setError(messageError);
+        FancyToast.makeText(getContext(), messageInfo, FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
 
 

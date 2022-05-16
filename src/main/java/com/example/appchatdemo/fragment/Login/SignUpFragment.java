@@ -141,8 +141,6 @@ public class SignUpFragment extends Fragment {
         )
             return false;
 
-
-
         if (password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))) {
             showMessageErrorScreen(textInputPassword, getString(R.string.regex_password_error), getString(R.string.invalid_information));
             return false;

@@ -2,7 +2,6 @@ package com.example.appchatdemo.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,7 +14,6 @@ import com.example.appchatdemo.R;
 //import com.example.appchatdemo.databinding.ActivityDashBoardBinding;
 import com.example.appchatdemo.databinding.ActivityDashBoardBinding;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageFragment;
-import com.example.appchatdemo.fragment.bottomnavigationmain.NPFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.OptionFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.ProfileFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.ProjectFragment;
@@ -56,16 +54,6 @@ public class DashBoardActivity extends AppCompatActivity {
                     binding.bottomNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
 
                     break;
-                case R.id.nav_np:
-                    openNPFragment();
-                    binding.bottomNavigationView.getMenu().findItem(R.id.nav_np).setChecked(true);
-                    FancyToast.makeText(this, getString(R.string.no_data), FancyToast.LENGTH_SHORT, FancyToast.DEFAULT, false).show();
-                    break;
-                case R.id.nav_project:
-                    openProjectFragment();
-                    binding.bottomNavigationView.getMenu().findItem(R.id.nav_project).setChecked(true);
-                    FancyToast.makeText(this, getString(R.string.no_data), FancyToast.LENGTH_SHORT, FancyToast.DEFAULT, false).show();
-                    break;
                 case R.id.nav_option:
                     openOptionFragment();
                     binding.bottomNavigationView.getMenu().findItem(R.id.nav_option).setChecked(true);
@@ -97,19 +85,6 @@ public class DashBoardActivity extends AppCompatActivity {
         }
     }
 
-    private void openProjectFragment() {
-        if (mCurrentFragment != FRAGMENT_PROJECT) {
-            replaceFragment(new ProjectFragment());
-            mCurrentFragment = FRAGMENT_PROJECT;
-        }
-    }
-
-    private void openNPFragment() {
-        if (mCurrentFragment != FRAGMENT_NP) {
-            replaceFragment(new NPFragment());
-            mCurrentFragment = FRAGMENT_NP;
-        }
-    }
 
     private void openOptionFragment() {
         if (mCurrentFragment != FRAGMENT_OPTION) {

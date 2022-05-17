@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_create_group_chat"
+    app:startDestination="@id/addGroupNameFragment">
+
+    <fragment
+        android:id="@+id/addGroupMemberFragment"
+        android:name="com.example.appchatdemo.fragment.CreateGroupChat.AddGroupMemberFragment"
+        android:label="fragment_add_group_member"
+        tools:layout="@layout/fragment_add_group_member" >
+        <action
+            android:id="@+id/action_addGroupMemberFragment_to_addGroupNameFragment"
+            app:destination="@id/addGroupNameFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroupNameFragment"
+        android:name="com.example.appchatdemo.fragment.CreateGroupChat.AddGroupNameFragment"
+        android:label="fragment_add_name_group"
+        tools:layout="@layout/fragment_add_name_group" >
+        <action
+            android:id="@+id/action_addGroupNameFragment_to_addGroupMemberFragment"
+            app:destination="@id/addGroupMemberFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            />
+    </fragment>
+</navigation>

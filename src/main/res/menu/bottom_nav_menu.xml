@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Cá nhân" />
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_page"
+        android:title="Trang chủ" />
+
+    <item
+        android:id="@+id/nav_option"
+        android:icon="@drawable/ic_baseline_groups_24"
+        android:title="Thành viên" />
+</menu>

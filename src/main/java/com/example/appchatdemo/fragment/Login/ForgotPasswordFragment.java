@@ -24,6 +24,8 @@ import com.example.appchatdemo.R;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
@@ -32,7 +34,7 @@ import java.util.Objects;
 public class ForgotPasswordFragment extends Fragment {
 
     private ImageView imgBack;
-    private EditText edtInputEmail;
+    private TextInputEditText edtInputEmail;
     private Button btnSend;
     private NavController navController;
     private AuthViewModel authViewModel;
@@ -58,7 +60,7 @@ public class ForgotPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         imgBack = view.findViewById(R.id.img_back_forget_password);
-        edtInputEmail = view.findViewById(R.id.edt_input_email_forget);
+        edtInputEmail = view.findViewById(R.id.edt_email_forget);
         btnSend = view.findViewById(R.id.btn_send_forgot_password);
         navController = Navigation.findNavController(view);
         auth = FirebaseAuth.getInstance();

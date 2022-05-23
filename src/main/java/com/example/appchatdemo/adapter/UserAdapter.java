@@ -24,21 +24,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> implements Filterable {
 
-
     private List<UserModel> userModelList;
     private List<UserModel> userListOld;
     private IClickItemUserListener iClickItemUserListener;
 
-    public UserAdapter( IClickItemUserListener iClickItemUserListener) {
+    public UserAdapter(IClickItemUserListener iClickItemUserListener) {
         this.iClickItemUserListener = iClickItemUserListener;
 
     }
 
-
     public List<UserModel> getUserModelList() {
         return userModelList;
     }
-
 
     //add list user from the viewmodel into adapter
     public void setUserModelList(List<UserModel> userModelList) {
@@ -63,9 +60,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
         }
 
         holder.tvUserName.setText(userModel.getUsername());
-
         Glide.with(holder.itemView.getContext()).load(userModelList.get(position).getImageUrl()).centerCrop().into(holder.imgAvatar);
-
+        holder.tvUserEmail.setText(userModel.getEmail());
         if (userModelList.get(position).getActiveStatus().equals("online")) {
             holder.imgIsOnline.setImageResource(R.drawable.online);
         } else {
@@ -92,7 +88,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
 
     class MyUserHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
-        private TextView tvUserName;
+        private TextView tvUserName, tvUserEmail;
         private CircleImageView imgAvatar;
         private ImageView imgIsOnline;
         private RelativeLayout layoutItemContact;
@@ -101,6 +97,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
             super(itemView);
 
             tvUserName = itemView.findViewById(R.id.userNameFrag);
+            tvUserEmail = itemView.findViewById(R.id.tvUserNameEmail);
             imgAvatar = itemView.findViewById(R.id.imageViewUser);
             imgIsOnline = itemView.findViewById(R.id.imgIsOnline);
             layoutItemContact = itemView.findViewById(R.id.layout_item_contact);

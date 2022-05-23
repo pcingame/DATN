@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="450dp"
     android:orientation="vertical"
     tools:context=".fragment.CreateGroupChat.AddGroupNameFragment">
 
@@ -12,7 +13,6 @@
         android:background="@color/background_app">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -47,14 +47,37 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgGroupAvatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_no_background"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp" />
+
+        <ImageView
+            android:id="@+id/imgPickImageGroup"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:src="@drawable/camera"
+            app:layout_anchor="@id/imgGroupAvatar"
+            app:layout_anchorGravity="end|center" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <EditText
         android:id="@+id/edtGroupName"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_margin="15dp"
-        android:background="@drawable/background_textbox"
         android:hint="@string/group_name"
         android:inputType="text"
+        android:textColor="@color/black"
         android:padding="5dp" />
 
     <Button
@@ -65,8 +88,8 @@
         android:layout_marginEnd="15dp"
         android:backgroundTint="@color/background_app"
         android:text="@string/add_group_member"
+        android:background="@drawable/button"
+        android:layout_marginBottom="10dp"
         android:textAllCaps="false"
-        android:textSize="18sp" />
-
-
+        android:textSize="20sp" />
 </LinearLayout>

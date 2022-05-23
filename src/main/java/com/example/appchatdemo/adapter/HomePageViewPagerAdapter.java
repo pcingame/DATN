@@ -1,9 +1,12 @@
-package com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment;
+package com.example.appchatdemo.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ContactFragment;
+import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.GroupChatFragment;
 
 public class HomePageViewPagerAdapter extends FragmentStateAdapter {
     public HomePageViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {

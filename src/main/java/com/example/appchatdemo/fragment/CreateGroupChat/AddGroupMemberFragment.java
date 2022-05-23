@@ -114,8 +114,8 @@ public class AddGroupMemberFragment extends Fragment {
         String userId = auth.getCurrentUser().getUid();
 
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
-                .getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(UserViewModel.class);
-        userViewModel.getAllUsers().observe(this, new Observer<List<UserModel>>() {
+                .getInstance(requireActivity().getApplication())).get(UserViewModel.class);
+        userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<UserModel>>() {
             @Override
             public void onChanged(List<UserModel> userModels) {
                 chonsenAdapter.setUserModelList(userModels);
@@ -128,7 +128,7 @@ public class AddGroupMemberFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 firestore = FirebaseFirestore.getInstance();
-                groupRefer =  firestore.collection("Group");
+                groupRefer = firestore.collection("Group");
 
                 chonsenAdapter.getUserChecked();
 
@@ -172,7 +172,7 @@ public class AddGroupMemberFragment extends Fragment {
     }
 
 
-    public void setCheckedAddToGroupMessenger(MemberModel memberModel){
+    public void setCheckedAddToGroupMessenger(MemberModel memberModel) {
 
     }
 

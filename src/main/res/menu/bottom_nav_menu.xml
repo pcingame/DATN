@@ -3,14 +3,14 @@
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Cá nhân" />
+        android:title="@string/nav_profile" />
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_page"
-        android:title="Trang chủ" />
+        android:title="@string/nav_home" />
 
     <item
-        android:id="@+id/nav_option"
+        android:id="@+id/nav_member"
         android:icon="@drawable/ic_baseline_groups_24"
-        android:title="Thành viên" />
+        android:title="@string/nav_member" />
 </menu>

@@ -38,9 +38,8 @@ public class AuthenticationRepository {
     private final FirebaseAuth auth;
     private final FirebaseFirestore fireStore;
     private String userId;
-    private String imgLinkDefaultAvatar = "https://firebasestorage.googleapis.com/v0/b/appmiochat.appspot.com/o/logo.png?alt=media&token=7e409ee9-6038-45b9-b365-206072a56490";
+    private String imgLinkDefaultAvatar = "https://firebasestorage.googleapis.com/v0/b/appmiochat.appspot.com/o/Photos%2Fd0742ce2f56f4d7ea522a9149e4b8658.png?alt=media&token=044fbbae-c5f0-4e4f-81d5-0cd31c50abc1";
     CustomProgress customProgress = CustomProgress.getInstance();
-
 
     public AuthenticationRepository(Application application) {
         this.application = application;
@@ -83,9 +82,10 @@ public class AuthenticationRepository {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("userId", userId);
                     hashMap.put("imageUrl", imgLinkDefaultAvatar);
+                    hashMap.put("username", name);
+                    hashMap.put("email", email);
                     hashMap.put("status", "offline");
                     hashMap.put("activeStatus", "offline");
-                    hashMap.put("username", name);
 
                     fireStore.collection("Users").document(userId).set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -113,7 +113,6 @@ public class AuthenticationRepository {
     }
 
     public void login(String email, String password) {
-
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -130,10 +129,9 @@ public class AuthenticationRepository {
                         b = application.getString(R.string.exist_account_login_vn);
                     } else if (b.equals(application.getString(R.string.block_request_el))) {
                         b = application.getString(R.string.block_request_vn);
-                    }else if(b.equals(application.getString(R.string.format_email_el))){
+                    } else if (b.equals(application.getString(R.string.format_email_el))) {
                         b = application.getString(R.string.invalid_information);
                     }
-
                     FancyToast.makeText(application, b, FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }

@@ -20,7 +20,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.MyUserHolder>{
+public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.MyUserHolder> {
 
     Context context;
     List<UserModel> userModelList;
@@ -67,10 +67,9 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.MyUserHo
 
     @Override
     public int getItemCount() {
-        if (userModelList == null){
+        if (userModelList == null) {
             return 0;
-        }
-        else {
+        } else {
             return userModelList.size();
         }
     }

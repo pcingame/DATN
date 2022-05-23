@@ -7,16 +7,18 @@ public class UserModel implements Serializable {
     private String userId;
     private String imageUrl;
     private String username;
+    private String email;
     private String status;
     private String activeStatus;
 
     public UserModel() {
     }
 
-    public UserModel(String userId, String imageUrl, String username, String status, String activeStatus) {
+    public UserModel(String userId, String imageUrl, String username, String email, String status, String activeStatus) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.username = username;
+        this.email = email;
         this.status = status;
         this.activeStatus = activeStatus;
     }
@@ -59,5 +61,13 @@ public class UserModel implements Serializable {
 
     public void setActiveStatus(String activeStatus) {
         this.activeStatus = activeStatus;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

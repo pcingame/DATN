@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class OptionFragment extends Fragment {
+public class MemberFragment extends Fragment {
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;

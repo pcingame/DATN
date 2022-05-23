@@ -83,6 +83,10 @@
     <string name="validate_repassword">Mật khẩu phải có ít nhất 6 kí tự</string>
     <string name="private_chat">Chat riêng tư</string>
     <string name="group_chat">Chat nhóm</string>
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_profile">Cá nhân</string>
+    <string name="nav_member">Thành viên</string>
+    <string name="send_repassword">Tiếp tục</string>
 
 
 

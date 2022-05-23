@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -30,6 +31,7 @@ public class SignUpFragment extends Fragment {
 
     private EditText edtEmail, edtPassword, edtFullName, edtConfirmPassword;
     private Button btnCreateAccount;
+    private ImageView imgBack;
     private TextView tvSignIn;
     private AuthViewModel authViewModel;
     private NavController navController;
@@ -75,6 +77,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        imgBack = view.findViewById(R.id.img_back_sign_up);
         edtFullName = view.findViewById(R.id.edt_name_sign_up);
         edtEmail = view.findViewById(R.id.edt_email_sign_up);
         edtPassword = view.findViewById(R.id.edt_password_sign_up);
@@ -112,6 +115,13 @@ public class SignUpFragment extends Fragment {
                 }
             }
 
+        });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_signUpFragment_to_signInFragment);
+            }
         });
 
     }
@@ -167,6 +177,5 @@ public class SignUpFragment extends Fragment {
         fieldScreen.setError(messageError);
         FancyToast.makeText(getContext(), messageInfo, FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
     }
-
 
 }

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.appchatdemo.R;
-import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.HomePageViewPagerAdapter;
+import com.example.appchatdemo.adapter.HomePageViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

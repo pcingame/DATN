@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchatdemo.R;
-import com.example.appchatdemo.adapter.IClickItemMemberListener;
+import com.example.appchatdemo.interfaces.IClickItemMemberListener;
 import com.example.appchatdemo.adapter.UserChonsenAdapter;
 import com.example.appchatdemo.model.GroupModel;
 import com.example.appchatdemo.model.MemberModel;

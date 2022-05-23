@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.PrivateMessageActivity;
-import com.example.appchatdemo.adapter.IClickItemUserListener;
+import com.example.appchatdemo.interfaces.IClickItemUserListener;
 import com.example.appchatdemo.adapter.UserAdapter;
 import com.example.appchatdemo.model.UserModel;
 import com.example.appchatdemo.viewmodel.UserViewModel;

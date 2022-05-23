@@ -1,6 +1,5 @@
 package com.example.appchatdemo.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.interfaces.IClickItemUserListener;
 import com.example.appchatdemo.model.UserModel;
 
 import java.util.ArrayList;

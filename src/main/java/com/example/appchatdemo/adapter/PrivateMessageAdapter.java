@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.interfaces.IClickItemFile;
 import com.example.appchatdemo.model.PrivateMessageModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ import java.util.Objects;
 public class PrivateMessageAdapter extends RecyclerView.Adapter<PrivateMessageAdapter.MyPrivateMessageHolder>{
 
     List<PrivateMessageModel> privateMessageModelList;
-    private  IClickItemFile iClickItemFile;
+    private IClickItemFile iClickItemFile;
 
     public static final int MESSAGE_RIGHT = 0;//for user layout
     public static final int MESSAGE_LEFT = 1;//for friend layout

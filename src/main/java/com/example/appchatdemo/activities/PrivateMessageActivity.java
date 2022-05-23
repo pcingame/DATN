@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.CustomProgress;
 import com.example.appchatdemo.R;
-import com.example.appchatdemo.adapter.IClickItemFile;
+import com.example.appchatdemo.interfaces.IClickItemFile;
 import com.example.appchatdemo.adapter.PrivateMessageAdapter;
 import com.example.appchatdemo.model.PrivateMessageModel;
 import com.example.appchatdemo.model.UserModel;

@@ -18,7 +18,7 @@ import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.CreateGroupChatActivity;
 import com.example.appchatdemo.activities.GroupMessageActivity;
 import com.example.appchatdemo.adapter.GroupAdapter;
-import com.example.appchatdemo.adapter.IClickItemGroupListener;
+import com.example.appchatdemo.interfaces.IClickItemGroupListener;
 import com.example.appchatdemo.model.GroupModel;
 import com.example.appchatdemo.viewmodel.GroupViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

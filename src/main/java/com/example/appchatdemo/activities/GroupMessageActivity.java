@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.adapter.GroupMessageAdapter;
-import com.example.appchatdemo.adapter.IClickItemFileInGroup;
+import com.example.appchatdemo.interfaces.IClickItemFileInGroup;
 import com.example.appchatdemo.databinding.ActivityGroupMessageBinding;
 import com.example.appchatdemo.model.GroupMessageModel;
 import com.example.appchatdemo.model.GroupModel;

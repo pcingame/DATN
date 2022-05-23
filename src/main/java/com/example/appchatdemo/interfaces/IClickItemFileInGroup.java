@@ -1,4 +1,4 @@
-package com.example.appchatdemo.adapter;
+package com.example.appchatdemo.interfaces;
 
 import com.example.appchatdemo.model.GroupMessageModel;
 

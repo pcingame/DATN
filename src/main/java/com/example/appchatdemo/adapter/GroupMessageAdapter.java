@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.interfaces.IClickItemFileInGroup;
 import com.example.appchatdemo.model.GroupMessageModel;
 import com.google.firebase.auth.FirebaseAuth;
 

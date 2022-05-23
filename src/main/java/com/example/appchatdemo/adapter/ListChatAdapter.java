@@ -16,6 +16,8 @@ import com.example.appchatdemo.activities.GroupMessageActivity;
 import com.example.appchatdemo.activities.PrivateMessageActivity;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ContactFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.GroupChatFragment;
+import com.example.appchatdemo.interfaces.IClickItemGroupListener;
+import com.example.appchatdemo.interfaces.IClickItemUserListener;
 import com.example.appchatdemo.model.GroupModel;
 import com.example.appchatdemo.model.ListChatModel;
 import com.example.appchatdemo.model.UserModel;

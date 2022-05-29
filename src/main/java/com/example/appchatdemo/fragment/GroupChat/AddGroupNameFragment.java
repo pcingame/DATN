@@ -1,4 +1,4 @@
-package com.example.appchatdemo.fragment.CreateGroupChat;
+package com.example.appchatdemo.fragment.GroupChat;
 
 import android.content.Intent;
 import android.os.Bundle;

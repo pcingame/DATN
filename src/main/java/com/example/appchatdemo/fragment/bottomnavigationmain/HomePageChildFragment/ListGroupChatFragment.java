@@ -30,10 +30,10 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class GroupChatFragment extends Fragment {
+public class ListGroupChatFragment extends Fragment {
 
     private FloatingActionButton btnFloat;
-    public static final String TAG = GroupChatFragment.class.getName();
+    public static final String TAG = ListGroupChatFragment.class.getName();
 
     FirebaseAuth auth;
     FirebaseStorage fireStore;
@@ -43,7 +43,7 @@ public class GroupChatFragment extends Fragment {
     GroupViewModel groupViewModel;
     List<GroupModel> groupList;
 
-    public GroupChatFragment() {
+    public ListGroupChatFragment() {
     }
 
     @Override
@@ -65,7 +65,7 @@ public class GroupChatFragment extends Fragment {
         rcvGroup.setLayoutManager(new LinearLayoutManager(getContext()));
 
         groupList = new ArrayList<>();
-        groupAdapter = new GroupAdapter( new IClickItemGroupListener() {
+        groupAdapter = new GroupAdapter(new IClickItemGroupListener() {
             @Override
             public void onClickItemGroup(GroupModel groupModel) {
                 onClickGoToGroupMessage(groupModel);
@@ -75,8 +75,8 @@ public class GroupChatFragment extends Fragment {
         String groupId = auth.getCurrentUser().getUid();
 
         groupViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
-                .getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(GroupViewModel.class);
-        groupViewModel.getAllGroupJoin().observe(this, new Observer<List<GroupModel>>() {
+                .getInstance(requireActivity().getApplication())).get(GroupViewModel.class);
+        groupViewModel.getAllGroupJoin().observe(getViewLifecycleOwner(), new Observer<List<GroupModel>>() {
             @Override
             public void onChanged(List<GroupModel> groupModels) {
                 groupAdapter.setGroupModelList(groupModels);

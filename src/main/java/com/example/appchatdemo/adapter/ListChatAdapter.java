@@ -15,7 +15,7 @@ import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.GroupMessageActivity;
 import com.example.appchatdemo.activities.PrivateMessageActivity;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ContactFragment;
-import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.GroupChatFragment;
+import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ListGroupChatFragment;
 import com.example.appchatdemo.interfaces.IClickItemGroupListener;
 import com.example.appchatdemo.interfaces.IClickItemUserListener;
 import com.example.appchatdemo.model.GroupModel;
@@ -37,7 +37,7 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.ListCh
     private List<UserModel> userModelList;
     private List<GroupModel> groupModelList;
     UserViewModel userViewModel;
-    GroupChatFragment groupChatFragment;
+    ListGroupChatFragment listGroupChatFragment;
     ContactFragment contactFragment;
 
     public ListChatAdapter(List<ListChatModel> chatModelList, Context context) {
@@ -92,12 +92,12 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.ListCh
     }
 
     private void onClickGoToGroupMessage(GroupModel groupModel) {
-        Intent intent = new Intent(groupChatFragment.getContext(), GroupMessageActivity.class);
+        Intent intent = new Intent(listGroupChatFragment.getContext(), GroupMessageActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("groupModel", groupModel);
         intent.putExtras(bundle);
-        groupChatFragment.getContext().startActivity(intent);
-        groupChatFragment.getActivity().overridePendingTransition(R.anim.from_left, R.anim.to_right);
+        listGroupChatFragment.getContext().startActivity(intent);
+        listGroupChatFragment.getActivity().overridePendingTransition(R.anim.from_left, R.anim.to_right);
     }
 
     private void onClickGoToPrivateMessage(UserModel userModel) {

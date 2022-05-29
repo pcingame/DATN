@@ -1,4 +1,4 @@
-package com.example.appchatdemo.fragment.CreateGroupChat;
+package com.example.appchatdemo.fragment.GroupChat;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 //import com.google.firebase.database.annotations.Nullable;
 

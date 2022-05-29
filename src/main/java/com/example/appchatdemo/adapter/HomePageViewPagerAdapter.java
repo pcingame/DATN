@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ContactFragment;
-import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.GroupChatFragment;
+import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ListGroupChatFragment;
 
 public class HomePageViewPagerAdapter extends FragmentStateAdapter {
     public HomePageViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -20,9 +20,9 @@ public class HomePageViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new ContactFragment();
             case 1:
-                return new GroupChatFragment();
+                return new ListGroupChatFragment();
             default:
-                return new GroupChatFragment();
+                return new ListGroupChatFragment();
         }
     }
 

@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class AuthenticationRepository {
@@ -86,6 +87,8 @@ public class AuthenticationRepository {
                     hashMap.put("email", email);
                     hashMap.put("status", "offline");
                     hashMap.put("activeStatus", "offline");
+                    hashMap.put("listChatPrivate", Arrays.asList());
+                    hashMap.put("listChatGroup", Arrays.asList());
 
                     fireStore.collection("Users").document(userId).set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

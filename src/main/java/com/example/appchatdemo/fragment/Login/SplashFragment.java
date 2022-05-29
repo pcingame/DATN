@@ -60,7 +60,7 @@ public class SplashFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         authViewModel = new ViewModelProvider(this , ViewModelProvider.AndroidViewModelFactory
-                .getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(AuthViewModel.class);
+                .getInstance(requireActivity().getApplication())).get(AuthViewModel.class);
         navController = Navigation.findNavController(view);
     }
 }

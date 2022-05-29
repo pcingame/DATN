@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,6 +34,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,6 +44,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -232,6 +237,11 @@ public class PrivateMessageActivity extends AppCompatActivity {
                 }
             }
         });
+
+        DocumentReference documentReference = fireStore.collection("Users").document(userId);
+        documentReference.update("listChatPrivate", FieldValue.arrayUnion(friendId));
+
+
     }
 
     private void sendFile(String friendId, String file, String userId, String fileName, String fileType) {
@@ -259,6 +269,8 @@ public class PrivateMessageActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
 

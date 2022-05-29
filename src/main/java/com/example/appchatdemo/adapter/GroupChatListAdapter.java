@@ -19,16 +19,16 @@ import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragme
 import com.example.appchatdemo.interfaces.IClickItemGroupListener;
 import com.example.appchatdemo.interfaces.IClickItemUserListener;
 import com.example.appchatdemo.model.GroupModel;
-import com.example.appchatdemo.model.ListChatModel;
+import com.example.appchatdemo.model.GroupChatListModel;
 import com.example.appchatdemo.model.UserModel;
 import com.example.appchatdemo.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.ListChatViewHodler> {
+public class GroupChatListAdapter extends RecyclerView.Adapter<GroupChatListAdapter.ListChatViewHodler> {
 
-    private List<ListChatModel> chatModelList;
+    private List<GroupChatListModel> chatModelList;
     public static final int TYPE_USER_MODEL = 1;
     public static final int TYPE_GROUP_MODEL = 2;
     private GroupModel groupModel;
@@ -40,7 +40,7 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.ListCh
     ListGroupChatFragment listGroupChatFragment;
     ContactFragment contactFragment;
 
-    public ListChatAdapter(List<ListChatModel> chatModelList, Context context) {
+    public GroupChatListAdapter(List<GroupChatListModel> chatModelList, Context context) {
         this.chatModelList = chatModelList;
         this.context = context;
         notifyDataSetChanged();
@@ -59,8 +59,8 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.ListCh
         userModelList = new ArrayList<>();
         groupModelList = new ArrayList<>();
 
-        ListChatModel listChatModel = chatModelList.get(position);
-        if (listChatModel == null) {
+        GroupChatListModel groupChatListModel = chatModelList.get(position);
+        if (groupChatListModel == null) {
             return;
         }
 
@@ -73,7 +73,7 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.ListCh
                    // onClickGoToPrivateMessage(userModel);
                 }
             });
-            userAdapter.setUserModelList(listChatModel.getUserModelList());
+            userAdapter.setUserModelList(groupChatListModel.getUserModelList());
             holder.rcvListChat.setAdapter(userAdapter);
 
 
@@ -86,7 +86,7 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.ListCh
                     //onClickGoToGroupMessage(groupModel);
                 }
             });
-            groupAdapter.setGroupModelList(listChatModel.getGroupModelList());
+            groupAdapter.setGroupModelList(groupChatListModel.getGroupModelList());
             holder.rcvListChat.setAdapter(groupAdapter);
         }
     }

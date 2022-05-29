@@ -6,18 +6,18 @@ import com.example.appchatdemo.model.UserModel;
 import java.io.Serializable;
 import java.util.List;
 
-public class ListChatModel implements Serializable {
+public class GroupChatListModel implements Serializable {
     private int type;
     private List<UserModel> userModelList;
     private List<GroupModel> groupModelList;
 
-    public ListChatModel(int type, List<UserModel> userModelList, List<GroupModel> groupModelList) {
+    public GroupChatListModel(int type, List<UserModel> userModelList, List<GroupModel> groupModelList) {
         this.type = type;
         this.userModelList = userModelList;
         this.groupModelList = groupModelList;
     }
 
-    public ListChatModel() {
+    public GroupChatListModel() {
     }
 
     public int getType() {

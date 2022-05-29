@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchatdemo.R;
-import com.example.appchatdemo.adapter.ListChatAdapter;
+import com.example.appchatdemo.adapter.GroupChatListAdapter;
 import com.example.appchatdemo.model.GroupModel;
-import com.example.appchatdemo.model.ListChatModel;
+import com.example.appchatdemo.model.GroupChatListModel;
 import com.example.appchatdemo.model.UserModel;
 import com.example.appchatdemo.repositories.GroupRepository;
 import com.example.appchatdemo.repositories.UserRepository;
@@ -33,7 +33,7 @@ import java.util.List;
 public class ProjectFragment extends Fragment {
 
     private RecyclerView rcvListChat;
-    private ListChatAdapter listChatAdapter;
+    private GroupChatListAdapter groupChatListAdapter;
     String userId;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
@@ -62,9 +62,9 @@ public class ProjectFragment extends Fragment {
         rcvListChat.setLayoutManager(linearLayoutManager);
         getListChat(new OnFinalLoading() {
             @Override
-            public void onSuccess(List<ListChatModel> listChatModels) {
-                listChatAdapter = new ListChatAdapter(listChatModels, getContext());
-                rcvListChat.setAdapter(listChatAdapter);
+            public void onSuccess(List<GroupChatListModel> groupChatListModels) {
+                groupChatListAdapter = new GroupChatListAdapter(groupChatListModels, getContext());
+                rcvListChat.setAdapter(groupChatListAdapter);
             }
         });
     }
@@ -73,7 +73,7 @@ public class ProjectFragment extends Fragment {
 
         List<UserModel> userList = new ArrayList<>();
         List<GroupModel> groupList = new ArrayList<>();
-        List<ListChatModel> listChatModels = new ArrayList<>();
+        List<GroupChatListModel> groupChatListModels = new ArrayList<>();
 
         userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -91,9 +91,9 @@ public class ProjectFragment extends Fragment {
                 }
 
                 if (onFinalLoading != null) {
-                    onFinalLoading.onSuccess(listChatModels);
+                    onFinalLoading.onSuccess(groupChatListModels);
                 }
-                listChatModels.add(new ListChatModel(ListChatAdapter.TYPE_USER_MODEL, userList, null));
+                groupChatListModels.add(new GroupChatListModel(GroupChatListAdapter.TYPE_USER_MODEL, userList, null));
             }
         });
 
@@ -111,14 +111,14 @@ public class ProjectFragment extends Fragment {
                 }
 
                 if (onFinalLoading != null) {
-                    onFinalLoading.onSuccess(listChatModels);
+                    onFinalLoading.onSuccess(groupChatListModels);
                 }
-                listChatModels.add(new ListChatModel(ListChatAdapter.TYPE_GROUP_MODEL, null, groupList));
+                groupChatListModels.add(new GroupChatListModel(GroupChatListAdapter.TYPE_GROUP_MODEL, null, groupList));
             }
         });
 
     }
     interface OnFinalLoading {
-        void onSuccess(List<ListChatModel> listChatModels);
+        void onSuccess(List<GroupChatListModel> groupChatListModels);
     }
 }

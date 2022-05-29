@@ -68,6 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
             holder.imgIsOnline.setImageResource(R.drawable.offline);
         }
 
+
         holder.layoutItemContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +122,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
                             list.add(userModel);
                         }
                     }
-
                     userModelList = list;
                 }
 

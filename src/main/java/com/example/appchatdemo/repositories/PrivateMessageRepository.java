@@ -60,9 +60,7 @@ public class PrivateMessageRepository {
                             && privateMessageModel.getSender().equals(friend)) {
 
                         privateMessageModelsList.add(privateMessageModel);
-
                         interfaceForMessages.MessagesFromFireStore(privateMessageModelsList);
-
                     }
 
                     if (adapter != null){

@@ -1,6 +1,7 @@
 package com.example.appchatdemo.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class UserModel implements Serializable {
@@ -13,12 +14,13 @@ public class UserModel implements Serializable {
     private String activeStatus;
     private List<String> listChatPrivate;
     private List<String> listChatGroup;
+    private Date lastMessageTime;
 
 
     public UserModel() {
     }
 
-    public UserModel(String userId, String imageUrl, String username, String email, String status, String activeStatus, List<String> listChatPrivate, List<String> listChatGroup) {
+    public UserModel(String userId, String imageUrl, String username, String email, String status, String activeStatus, List<String> listChatPrivate, List<String> listChatGroup, Date lastMessageTime) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.username = username;
@@ -27,6 +29,7 @@ public class UserModel implements Serializable {
         this.activeStatus = activeStatus;
         this.listChatPrivate = listChatPrivate;
         this.listChatGroup = listChatGroup;
+        this.lastMessageTime = lastMessageTime;
     }
 
     public String getUserId() {
@@ -91,5 +94,13 @@ public class UserModel implements Serializable {
 
     public void setListChatGroup(List<String> listChatGroup) {
         this.listChatGroup = listChatGroup;
+    }
+
+    public Date getLastMessageTime() {
+        return lastMessageTime;
+    }
+
+    public void setLastMessageTime(Date lastMessageTime) {
+        this.lastMessageTime = lastMessageTime;
     }
 }

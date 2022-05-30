@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.CustomProgress;
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.adapter.PrivateChatListAdapter;
 import com.example.appchatdemo.databinding.ActivityPrivateMessageBinding;
 import com.example.appchatdemo.interfaces.IClickItemFile;
 import com.example.appchatdemo.adapter.PrivateMessageAdapter;
@@ -58,8 +59,6 @@ public class PrivateMessageActivity extends AppCompatActivity {
     private PrivateMessageViewModel privateMessageViewModel;
     private String friendId, message, userId, userName;
     private final int IMAGE = 11, PDF = 22, DOCX = 33, FILE = 44;
-
-
     CustomProgress customProgress = CustomProgress.getInstance();
     private String displayName;
     List<PrivateMessageModel> privateMessageModelList;
@@ -138,7 +137,6 @@ public class PrivateMessageActivity extends AppCompatActivity {
             public void onChanged(List<PrivateMessageModel> privateMessageModels) {
                 mPrivateMessageAdapter.setPrivateMessageModelList(privateMessageModels);
                 binding.rcvPrivateMessage.setAdapter(mPrivateMessageAdapter);
-
             }
         });
 
@@ -240,7 +238,7 @@ public class PrivateMessageActivity extends AppCompatActivity {
 
         DocumentReference documentReference = fireStore.collection("Users").document(userId);
         documentReference.update("listChatPrivate", FieldValue.arrayUnion(friendId));
-
+        //documentReference.update("lastMessageTime", date);
 
     }
 

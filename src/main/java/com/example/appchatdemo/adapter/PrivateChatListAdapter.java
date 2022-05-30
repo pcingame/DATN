@@ -122,7 +122,7 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
         String userId;
         userId = auth.getCurrentUser().getUid();
 
-        fireStore.collection("PrivateMessages").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fireStore.collection("PrivateMessages").orderBy("date", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentSnapshot ds : value.getDocuments()) {

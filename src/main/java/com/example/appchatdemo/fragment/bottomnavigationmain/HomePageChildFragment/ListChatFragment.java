@@ -32,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +49,7 @@ public class ListChatFragment extends Fragment {
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     String userId;
     private List<PrivateChatListModel> privateChatList;
+    private ArrayList<String> listChat;
 
     FirebaseUser fuser;
 
@@ -77,44 +79,35 @@ public class ListChatFragment extends Fragment {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         privateChatList = new ArrayList<>();
-        getListChatInFireStore();
         getListChat();
 
     }
 
     private void getListChat() {
+        mUsers = new ArrayList<>();
         firestore.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                mUsers = new ArrayList<>();
                 if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if (documentSnapshot.exists()) {
-                        ArrayList<String> list = (ArrayList<String>) documentSnapshot.get("listChatPrivate");
-                        Log.d("AAAA", list.toString());
+                        listChat = (ArrayList<String>) documentSnapshot.get("listChatPrivate");
+                        if (listChat == null) {
+                            FancyToast.makeText(getContext(), "Chưa có tin nhắn nào", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
+                        } else {
+                            fetchingList(listChat);
+                        }
                     }
                 }
+
             }
         });
     }
 
-    private void getListChatInFireStore() {
-
-        firestore.collection("PrivateChatList").whereEqualTo("id", fuser.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                privateChatList.clear();
-                for (DocumentSnapshot snapshot : value.getDocuments()) {
-                    PrivateChatListModel chat = snapshot.toObject(PrivateChatListModel.class);
-                    privateChatList.add(chat);
-                }
-                chatList();
-            }
-
-        });
-    }
-
-    private void chatList() {
+    private void fetchingList(ArrayList<String> listChat) {
         mUsers = new ArrayList<>();
+        //orderBy("lastMessageTime", Query.Direction.ASCENDING)
         firestore.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -122,12 +115,13 @@ public class ListChatFragment extends Fragment {
                 assert value != null;
                 for (DocumentSnapshot ds : value.getDocuments()) {
                     UserModel userModel = ds.toObject(UserModel.class);
-                    for (PrivateChatListModel chat : privateChatList) {
-                        if (userModel.getUserId().equals(chat.getId())) {
+                    for (int i = 0; i < listChat.size(); i++) {
+                        if (userModel.getUserId().equals(listChat.get(i))) {
                             mUsers.add(userModel);
                         }
                     }
                 }
+
                 privateChatListAdapter = new PrivateChatListAdapter(getContext(), mUsers, new IClickItemUserListener() {
                     @Override
                     public void onClickItemUser(UserModel userModel) {

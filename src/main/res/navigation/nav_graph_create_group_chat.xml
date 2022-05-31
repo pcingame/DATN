@@ -28,5 +28,13 @@
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             />
+        <action
+            android:id="@+id/action_addGroupNameFragment_to_listGroupChatFragment"
+            app:destination="@id/listGroupChatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/listGroupChatFragment"
+        android:name="com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ListGroupChatFragment"
+        android:label="fragment_list_group"
+        tools:layout="@layout/fragment_list_group" />
 </navigation>

@@ -87,6 +87,9 @@
     <string name="nav_profile">Cá nhân</string>
     <string name="nav_member">Thành viên</string>
     <string name="send_repassword">Tiếp tục</string>
+    <string name="validate_group_name">Tên nhóm không được để trống</string>
+    <string name="create_group_success">Tạo nhóm thành công"</string>
+    <string name="validate_group_member">Nhóm phải có hơn 2 thành viên trở lên</string>
 
 
 </resources>

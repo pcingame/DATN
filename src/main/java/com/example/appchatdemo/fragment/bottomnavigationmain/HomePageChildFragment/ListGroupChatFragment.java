@@ -27,14 +27,12 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 
 public class ListGroupChatFragment extends Fragment {
 
     private FloatingActionButton btnFloat;
-    public static final String TAG = ListGroupChatFragment.class.getName();
-
     FirebaseAuth auth;
     FirebaseStorage fireStore;
     String userId;
@@ -42,9 +40,6 @@ public class ListGroupChatFragment extends Fragment {
     GroupAdapter groupAdapter;
     GroupViewModel groupViewModel;
     List<GroupModel> groupList;
-
-    public ListGroupChatFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,8 +67,6 @@ public class ListGroupChatFragment extends Fragment {
             }
         });
 
-        String groupId = auth.getCurrentUser().getUid();
-
         groupViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(requireActivity().getApplication())).get(GroupViewModel.class);
         groupViewModel.getAllGroupJoin().observe(getViewLifecycleOwner(), new Observer<List<GroupModel>>() {
@@ -92,7 +85,6 @@ public class ListGroupChatFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreateGroupChatActivity.class);
                 startActivity(intent);
-                //Toast.makeText(getContext(), "move to create group activity", Toast.LENGTH_SHORT).show();
             }
         });
     }

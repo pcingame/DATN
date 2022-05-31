@@ -20,26 +20,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchatdemo.R;
-import com.example.appchatdemo.interfaces.IClickItemMemberListener;
-import com.example.appchatdemo.adapter.UserChonsenAdapter;
-import com.example.appchatdemo.model.GroupModel;
-import com.example.appchatdemo.model.MemberModel;
+import com.example.appchatdemo.adapter.ListGroupMemberAdapter;
+import com.example.appchatdemo.interfaces.IClickCheckboxListener;
 import com.example.appchatdemo.model.UserModel;
 import com.example.appchatdemo.viewmodel.UserViewModel;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-//import com.google.firebase.database.annotations.Nullable;
-
 
 public class AddGroupMemberFragment extends Fragment {
 
@@ -47,23 +43,14 @@ public class AddGroupMemberFragment extends Fragment {
     private Button btnCreateGroup;
     private NavController navController;
     private RecyclerView rcvUser;
-
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
-    private UserChonsenAdapter chonsenAdapter;
+    private ListGroupMemberAdapter listGroupMemberAdapter;
     private UserViewModel userViewModel;
     private List<UserModel> userList;
     private SearchView searchView;
-    private UserModel userModel;
-    private GroupModel groupModel;
-    private CollectionReference groupRefer;
-    private Task<DocumentReference> usersRefer;
-    private String getIdGroup;
-    String takeName;
-    //private String imgLinkDefaultAvatar = "https://firebasestorage.googleapis.com/v0/b/appmiochat.appspot.com/o/logo.png?alt=media&token=7e409ee9-6038-45b9-b365-206072a56490";
-    private MemberModel memberModel;
-    private String imgLinkDefaultAvatar = "https://firebasestorage.googleapis.com/v0/b/appmiochat.appspot.com/o/logo.png?alt=media&token=7e409ee9-6038-45b9-b365-206072a56490";
-
+    private String imgLinkDefaultAvatar = "https://firebasestorage.googleapis.com/v0/b/appmiochat.appspot.com/o/Photos%2Fd0742ce2f56f4d7ea522a9149e4b8658.png?alt=media&token=044fbbae-c5f0-4e4f-81d5-0cd31c50abc1";
+    private List<String> listmember;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +63,6 @@ public class AddGroupMemberFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
     }
 
     @Override
@@ -90,8 +76,8 @@ public class AddGroupMemberFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        memberModel = new MemberModel();
-        String takeName = getArguments().getString("groupName");
+        Bundle bundle = this.getArguments();
+        String takeName = bundle.getString("groupName");
 
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -104,55 +90,58 @@ public class AddGroupMemberFragment extends Fragment {
         rcvUser.setHasFixedSize(true);
         rcvUser.setLayoutManager(new LinearLayoutManager(getContext()));
         userList = new ArrayList<>();
-        chonsenAdapter = new UserChonsenAdapter(new IClickItemMemberListener() {
+
+        listGroupMemberAdapter = new ListGroupMemberAdapter(getContext(), new IClickCheckboxListener() {
             @Override
-            public void onClickItemUser(MemberModel memberModel) {
-                setCheckedAddToGroupMessenger(memberModel);
+            public void onCheckboxMemberListener(ArrayList<String> arrayList) {
+                listmember = new ArrayList<>(arrayList);
             }
         });
-        String userId = auth.getCurrentUser().getUid();
-
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(requireActivity().getApplication())).get(UserViewModel.class);
+
         userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<UserModel>>() {
             @Override
             public void onChanged(List<UserModel> userModels) {
-                chonsenAdapter.setUserModelList(userModels);
-                rcvUser.setAdapter(chonsenAdapter);
-                chonsenAdapter.notifyDataSetChanged();
+                listGroupMemberAdapter.setUserModelList(userModels);
+                rcvUser.setAdapter(listGroupMemberAdapter);
+                if (listGroupMemberAdapter != null) {
+                    listGroupMemberAdapter.notifyItemInserted(0);
+                    listGroupMemberAdapter.notifyDataSetChanged();
+                }
             }
         });
-        btnCreateGroup.setOnClickListener(new View.OnClickListener() {
 
+        btnCreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 firestore = FirebaseFirestore.getInstance();
-                groupRefer = firestore.collection("Group");
-
-                chonsenAdapter.getUserChecked();
-
-                Map<String, Object> group = new HashMap<>();
-                group.put("groupName", takeName);
-                group.put("host", auth.getCurrentUser().getUid());
-                group.put("groupMember", chonsenAdapter.getUserChecked());
-                group.put("groupAvata", imgLinkDefaultAvatar);
-                //add many member
-                firestore.collection("Group").add(group).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getContext(), "nhóm đã được lập", Toast.LENGTH_SHORT).show();
-                        String id = documentReference.getId();
-                        addIdFieldForGroup(id);
+                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+                Date date = new Date(System.currentTimeMillis());
+                String currentTime = formatter.format(date);
+                listmember.add(auth.getCurrentUser().getUid());
+                if (listmember.size() <= 2) {
+                    FancyToast.makeText(getContext(), getString(R.string.validate_group_member), Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
+                } else {
+                    HashMap<String, Object> group = new HashMap<>();
+                    group.put("groupId", currentTime + ": " + takeName);
+                    group.put("groupName", takeName);
+                    group.put("host", auth.getCurrentUser().getUid());
+                    group.put("groupAvatar", imgLinkDefaultAvatar);
+                    for (int i = 0; i < listmember.size(); i++) {
+                        group.put("memberList", Arrays.asList(listmember.toArray()));
                     }
-                });
-                group.put("groupName", takeName);
-                firestore.collection("Users").document(auth.getCurrentUser().getUid()).collection("PrivateGroup").add(group).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getContext(), "bạn là trưởng nhóm", Toast.LENGTH_SHORT).show();
-                    }
-                });
 
+                    firestore.collection("Groups").document(currentTime + ": " + takeName).set(group).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
+
+                    FancyToast.makeText(getContext(), getString(R.string.create_group_success), Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                    getActivity().finish();
+                }
             }
         });
 
@@ -162,18 +151,5 @@ public class AddGroupMemberFragment extends Fragment {
                 navController.navigate(R.id.action_addGroupMemberFragment_to_addGroupNameFragment);
             }
         });
-
-
     }
-
-    private void addIdFieldForGroup(String id) {
-        firestore.collection("Group").document(id).update("groupId", id);
-    }
-
-
-    public void setCheckedAddToGroupMessenger(MemberModel memberModel) {
-
-    }
-
-
 }

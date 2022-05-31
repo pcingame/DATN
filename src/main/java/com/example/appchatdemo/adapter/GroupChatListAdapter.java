@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.GroupMessageActivity;
 import com.example.appchatdemo.activities.PrivateMessageActivity;
-import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ContactFragment;
+import com.example.appchatdemo.fragment.bottomnavigationmain.ContactFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ListGroupChatFragment;
 import com.example.appchatdemo.interfaces.IClickItemGroupListener;
 import com.example.appchatdemo.interfaces.IClickItemUserListener;

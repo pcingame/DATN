@@ -52,7 +52,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
         if (groupModel == null) {
             return;
         }
-        Glide.with(holder.itemView.getContext()).load(groupModelList.get(position).getGroupAvata()).centerCrop().into(holder.groupImg);
+        Glide.with(holder.itemView.getContext()).load(groupModelList.get(position).getGroupAvatar()).centerCrop().into(holder.groupImg);
         holder.groupName.setText(groupModel.getGroupName());
         holder.groupNewest.setText("have new message");
         holder.layout.setOnClickListener(new View.OnClickListener() {

@@ -5,18 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupModel implements Serializable {
-    private String host, groupAvata, groupName, groupId;
-    private ArrayList<MemberModel> groupMember;
+
+    private String groupId;
+    private String host;
+    private String groupAvatar;
+    private String groupName;
+    private List<String> memberList;
 
     public GroupModel() {
     }
 
-    public GroupModel(String host, String groupAvata, String groupName, String groupId, ArrayList<MemberModel> groupMember) {
+    public GroupModel(String host, String groupAvatar, String groupName, String groupId, List<String> memberList) {
         this.host = host;
-        this.groupAvata = groupAvata;
+        this.groupAvatar = groupAvatar;
         this.groupName = groupName;
         this.groupId = groupId;
-        this.groupMember = groupMember;
+        this.memberList = memberList;
     }
 
     public String getHost() {
@@ -27,12 +31,12 @@ public class GroupModel implements Serializable {
         this.host = host;
     }
 
-    public String getGroupAvata() {
-        return groupAvata;
+    public String getGroupAvatar() {
+        return groupAvatar;
     }
 
-    public void setGroupAvata(String groupAvata) {
-        this.groupAvata = groupAvata;
+    public void setGroupAvatar(String groupAvata) {
+        this.groupAvatar = groupAvata;
     }
 
     public String getGroupName() {
@@ -51,11 +55,11 @@ public class GroupModel implements Serializable {
         this.groupId = groupId;
     }
 
-    public ArrayList<MemberModel> getGroupMember() {
-        return groupMember;
+    public List<String> getMemberList() {
+        return memberList;
     }
 
-    public void setGroupMember(ArrayList<MemberModel> groupMember) {
-        this.groupMember = groupMember;
+    public void setMemberList(List<String> memberList) {
+        this.memberList = memberList;
     }
 }

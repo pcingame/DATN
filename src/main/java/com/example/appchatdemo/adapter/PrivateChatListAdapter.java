@@ -69,7 +69,6 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
 
         holder.tvUserName.setText(userModel.getUsername());
         Glide.with(holder.itemView.getContext()).load(userModelList.get(position).getImageUrl()).centerCrop().into(holder.imgAvatar);
-        //   holder.tvLastMessger.setText(userModel.getEmail());
         if (userModelList.get(position).getActiveStatus().equals("online")) {
             holder.imgIsOnline.setImageResource(R.drawable.online);
         } else {
@@ -122,7 +121,7 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
         String userId;
         userId = auth.getCurrentUser().getUid();
 
-        fireStore.collection("PrivateMessages").orderBy("date", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fireStore.collection("PrivateMessages").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentSnapshot ds : value.getDocuments()) {
@@ -137,7 +136,6 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
                     }
 
                 }
-
                 switch (theLastMessage) {
                     case "default":
                         last_msg.setText("No Message");
@@ -147,7 +145,6 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
                         last_msg.setText(theLastMessage);
                         break;
                 }
-
                 theLastMessage = "default";
             }
         });

@@ -2,12 +2,16 @@ package com.example.appchatdemo.repositories;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.appchatdemo.model.GroupModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -26,22 +30,25 @@ public class GroupRepository {
     }
 
     public void getGroupUserJoinInFireStore() {
-        firestore.collection("Group")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            groupModelList.clear();
-                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                GroupModel groupModel = documentSnapshot.toObject(GroupModel.class);
-                                groupModelList.add(groupModel);
-                                interfaceOfGroup.showListOfGroup(groupModelList);
+        String userId = auth.getCurrentUser().getUid();
 
-                            }
+        firestore.collection("Groups").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                boolean checkMember = false;
+                groupModelList.clear();
+                for (DocumentSnapshot snapshot : value.getDocuments()) {
+                    GroupModel groupModel = snapshot.toObject(GroupModel.class);
+                    for (int i = 0; i < groupModel.getMemberList().size(); i++) {
+                        if (groupModel.getMemberList().get(i).equals(userId)) {
+                            groupModelList.add(groupModel);
+                            interfaceOfGroup.showListOfGroup(groupModelList);
                         }
                     }
-                });
+                }
+            }
+        });
+
     }
 
     public interface OnGroupAvailableInFireStore {

@@ -21,6 +21,7 @@ import androidx.navigation.Navigation;
 
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.DashBoardActivity;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 
 public class AddGroupNameFragment extends Fragment {
@@ -29,8 +30,6 @@ public class AddGroupNameFragment extends Fragment {
     private ImageButton btnBack;
     private EditText edtGroupName;
     private NavController navController;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,28 +60,27 @@ public class AddGroupNameFragment extends Fragment {
         btnBack = view.findViewById(R.id.btnBack_name);
         edtGroupName = view.findViewById(R.id.edtGroupName);
         navController = Navigation.findNavController(view);
-
         btnAddMember.setEnabled(true);
-
-
 
         btnAddMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (edtGroupName.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getContext(), "Nhóm phải có tên", Toast.LENGTH_SHORT).show();
+                    FancyToast.makeText(getContext(), getString(R.string.validate_group_name), Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
                 } else {
                     AddGroupMemberFragment fragment = new AddGroupMemberFragment();
+
                     FragmentManager manager = getActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
-                    Bundle result = new Bundle();
-                    result.putString("groupName", edtGroupName.getText().toString());
-                    fragment.setArguments(result);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("groupName", edtGroupName.getText().toString());
+                    fragment.setArguments(bundle);
+
                     transaction.replace(R.id.nav_host_fragment_create_group_chat, fragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
-
             }
         });
 
@@ -94,10 +92,7 @@ public class AddGroupNameFragment extends Fragment {
         });
     }
 
-    public void backToDashBoardActivity(){
-        Intent intent = new Intent(getContext(), DashBoardActivity.class);
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
+    public void backToDashBoardActivity() {
         getActivity().finish();
     }
 

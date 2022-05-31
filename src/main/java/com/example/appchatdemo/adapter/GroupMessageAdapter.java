@@ -43,7 +43,7 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatitemright,
                     parent, false);
             return new GroupMessageHolder(view);
-        } else  {
+        } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatitemleft,
                     parent, false);
             return new GroupMessageHolder(view);
@@ -53,7 +53,7 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
     @Override
     public void onBindViewHolder(@NonNull GroupMessageAdapter.GroupMessageHolder holder, int position) {
         GroupMessageModel messageModel = groupMessageModelList.get(position);
-        if(messageModel == null){
+        if (messageModel == null) {
             return;
         }
 

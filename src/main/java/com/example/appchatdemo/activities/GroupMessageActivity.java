@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.example.appchatdemo.R;
 import com.example.appchatdemo.adapter.GroupMessageAdapter;
 import com.example.appchatdemo.interfaces.IClickItemFileInGroup;
 import com.example.appchatdemo.databinding.ActivityGroupMessageBinding;
@@ -36,10 +37,9 @@ public class GroupMessageActivity extends AppCompatActivity {
     FirebaseFirestore fireStore;
     FirebaseAuth firebaseAuth;
 
-    private String groupId, groupName, imageUrl, message, yourId;
+    private String groupId, groupName, groupAvatar, message, yourId;
     private int position, memberCount;
 
-    private String displayName;
     private GroupMessageViewModel groupMessageViewModel;
     List<GroupMessageModel> groupMessageModelList;
     GroupMessageAdapter groupMessageAdapter;
@@ -65,17 +65,15 @@ public class GroupMessageActivity extends AppCompatActivity {
         if (bundle == null) {
             return;
         }
-
         GroupModel groupModel = (GroupModel) bundle.get("groupModel");
-
-        //position = userModel.get
         groupId = groupModel.getGroupId();
         groupName = groupModel.getGroupName();
-        memberCount = groupModel.getGroupMember().size() + 1;
+        memberCount = groupModel.getMemberList().size();
+        groupAvatar = groupModel.getGroupAvatar();
 
-        binding.tvGroupName.setText(groupModel.getGroupName());
+        binding.tvGroupName.setText(groupName);
         binding.tvNumberOfMember.setText(memberCount + " thành viên");
-        Glide.with(this).load(groupModel.getGroupAvata()).centerCrop().into(binding.imgAvatarGroup);
+        Glide.with(this).load(groupAvatar).centerCrop().into(binding.imgAvatarGroup);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
@@ -147,14 +145,12 @@ public class GroupMessageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(GroupMessageActivity.this, DashBoardActivity.class);
-        startActivity(intent);
+        overridePendingTransition(R.anim.to_left, R.anim.to_right);
         finish();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        groupMessageViewModel.resetAll();
     }
 }

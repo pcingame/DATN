@@ -35,35 +35,27 @@ public class PrivateMessageRepository {
 
     public void getAllMessages(String friend) {
         userId = auth.getCurrentUser().getUid();
-
-
         fireStore.collection("PrivateMessages").orderBy("date", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                if (error != null){
+                if (error != null) {
                     Log.e("AAA", "Listen failed.", error);
                     return;
                 }
 
                 privateMessageModelsList.clear();
                 for (DocumentSnapshot ds : value.getDocuments()) {
-
                     PrivateMessageModel privateMessageModel = ds.toObject(PrivateMessageModel.class);
-
                     //only display conversation between two user
                     //since every user will have different conversation
                     assert privateMessageModel != null;
-
                     if (privateMessageModel.getSender().equals(userId) && privateMessageModel.getReceiver().equals(friend)
                             || privateMessageModel.getReceiver().equals(userId)
                             && privateMessageModel.getSender().equals(friend)) {
-
                         privateMessageModelsList.add(privateMessageModel);
                         interfaceForMessages.MessagesFromFireStore(privateMessageModelsList);
                     }
-
-                    if (adapter != null){
+                    if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
 

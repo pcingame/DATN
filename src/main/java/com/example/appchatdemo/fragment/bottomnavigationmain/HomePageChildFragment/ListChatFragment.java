@@ -1,6 +1,11 @@
 package com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,34 +13,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.activities.PrivateMessageActivity;
 import com.example.appchatdemo.adapter.PrivateChatListAdapter;
 import com.example.appchatdemo.interfaces.IClickItemUserListener;
 import com.example.appchatdemo.model.PrivateChatListModel;
-import com.example.appchatdemo.model.PrivateMessageModel;
 import com.example.appchatdemo.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -44,28 +40,23 @@ public class ListChatFragment extends Fragment {
     private RecyclerView recyclerPrivateChatList;
     private PrivateChatListAdapter privateChatListAdapter;
     private List<UserModel> mUsers;
-    private UserModel userModel;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     String userId;
     private List<PrivateChatListModel> privateChatList;
     private ArrayList<String> listChat;
-
     FirebaseUser fuser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_list_chat, container, false);
-
     }
 
     @Override
@@ -80,7 +71,6 @@ public class ListChatFragment extends Fragment {
 
         privateChatList = new ArrayList<>();
         getListChat();
-
     }
 
     private void getListChat() {
@@ -107,8 +97,7 @@ public class ListChatFragment extends Fragment {
 
     private void fetchingList(ArrayList<String> listChat) {
         mUsers = new ArrayList<>();
-        //orderBy("lastMessageTime", Query.Direction.ASCENDING)
-        firestore.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("Users").orderBy("lastMessageTime", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 mUsers.clear();
@@ -125,11 +114,25 @@ public class ListChatFragment extends Fragment {
                 privateChatListAdapter = new PrivateChatListAdapter(getContext(), mUsers, new IClickItemUserListener() {
                     @Override
                     public void onClickItemUser(UserModel userModel) {
-
+                        onClickGoToPrivateMessage(userModel);
                     }
                 });
                 recyclerPrivateChatList.setAdapter(privateChatListAdapter);
             }
         });
+    }
+
+    private void onClickGoToPrivateMessage(UserModel userModel) {
+        Intent intent = new Intent(getContext(), PrivateMessageActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("userModel", userModel);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.from_right, R.anim.to_left);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

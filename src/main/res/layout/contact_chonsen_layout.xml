@@ -17,7 +17,7 @@
             android:layout_margin="10dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/member_avata"
+                android:id="@+id/member_avatar"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:src="@mipmap/ic_launcher" />
@@ -25,45 +25,45 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/member_avata">
+                android:layout_toRightOf="@id/member_avatar">
+
                 <TextView
                     android:id="@+id/member_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:maxLines="1"
                     android:ellipsize="end"
                     android:maxLength="25"
+                    android:maxLines="1"
                     android:text="member name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
-                    android:id="@+id/member_id"
+                    android:id="@+id/member_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/member_name"
-                    android:maxLines="1"
                     android:ellipsize="end"
-                    android:maxLength="10"
+                    android:maxLength="20"
+                    android:maxLines="1"
                     android:text="member id"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/member_name" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <CheckBox
-                android:id="@+id/member_chonsen"
+                android:id="@+id/member_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:checked="false"/>
-
+                android:checked="false" />
         </RelativeLayout>
-
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -123,7 +123,6 @@ public class DashBoardActivity extends AppCompatActivity {
 
     public void setIsOnline(String isOnline) {
         FirebaseUser userOfFirebase = FirebaseAuth.getInstance().getCurrentUser();
-
         if (userOfFirebase != null) {
             userId = userOfFirebase.getUid();
         }

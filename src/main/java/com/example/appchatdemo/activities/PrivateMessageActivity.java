@@ -82,7 +82,6 @@ public class PrivateMessageActivity extends AppCompatActivity {
         binding.tvFriendName.setText(userModel.getUsername());
         Glide.with(this).load(userModel.getImageUrl()).centerCrop().into(binding.imgAvatarFriend);
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         binding.rcvPrivateMessage.setLayoutManager(linearLayoutManager);
@@ -95,7 +94,6 @@ public class PrivateMessageActivity extends AppCompatActivity {
             }
         });
         binding.rcvPrivateMessage.setAdapter(mPrivateMessageAdapter);
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         fireStore = FirebaseFirestore.getInstance();
@@ -143,6 +141,8 @@ public class PrivateMessageActivity extends AppCompatActivity {
     }
 
     private void backToContactFragment() {
+        Intent intent = new Intent(PrivateMessageActivity.this, DashBoardActivity.class);
+        startActivity(intent);
         finish();
         overridePendingTransition(R.anim.from_left, R.anim.to_right);
     }
@@ -214,6 +214,7 @@ public class PrivateMessageActivity extends AppCompatActivity {
     private void SendMessage(String friendId, String message, String userId) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+        //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd.MM");
         Date date = new Date(System.currentTimeMillis());
         String currentTime = formatter.format(date);
 
@@ -238,12 +239,20 @@ public class PrivateMessageActivity extends AppCompatActivity {
 
         DocumentReference documentReference = fireStore.collection("Users").document(userId);
         documentReference.update("listChatPrivate", FieldValue.arrayUnion(friendId));
-        //documentReference.update("lastMessageTime", date);
 
+        DocumentReference documentReference2 = fireStore.collection("Users").document(friendId);
+        documentReference2.update("listChatPrivate", FieldValue.arrayUnion(userId));
+        documentReference2.update("lastMessageTime", date);
+
+        /*DocumentReference documentReference3 = fireStore.collection("Users").document(userId).collection("test").document(friendId);
+        documentReference3.update("listChatPrivate", FieldValue.arrayUnion(userId));
+        documentReference3.update("lastMessageTime", date);
+*/
     }
 
     private void sendFile(String friendId, String file, String userId, String fileName, String fileType) {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+       // SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd.MM");
         Date date = new Date(System.currentTimeMillis());
         String currentTime = formatter.format(date);
 
@@ -267,7 +276,12 @@ public class PrivateMessageActivity extends AppCompatActivity {
                 }
             }
         });
+        DocumentReference documentReference = fireStore.collection("Users").document(userId);
+        documentReference.update("listChatPrivate", FieldValue.arrayUnion(friendId));
 
+        DocumentReference documentReference2 = fireStore.collection("Users").document(friendId);
+        documentReference2.update("listChatPrivate", FieldValue.arrayUnion(userId));
+        documentReference2.update("lastMessageTime", date);
 
     }
 

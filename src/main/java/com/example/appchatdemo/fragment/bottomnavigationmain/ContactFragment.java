@@ -1,4 +1,4 @@
-package com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment;
+package com.example.appchatdemo.fragment.bottomnavigationmain;
 
 import android.app.SearchManager;
 import android.content.Context;

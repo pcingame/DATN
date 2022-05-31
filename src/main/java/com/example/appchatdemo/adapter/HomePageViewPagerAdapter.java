@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ContactFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ListChatFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageChildFragment.ListGroupChatFragment;
 

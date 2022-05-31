@@ -35,22 +35,21 @@ public class GroupMessageRepository {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if (error != null) {
-                    Log.e("hmm", "failed", error);
-                    return;
-                }
-
                 groupMessageModelList.clear();
                 for (DocumentSnapshot snapshot : value.getDocuments()) {
                     GroupMessageModel groupMessageModel = snapshot.toObject(GroupMessageModel.class);
-                    assert groupMessageModel != null;
-                    if (groupMessageModel.getReceiver().equals(groupId)) {
-                        groupMessageModelList.add(groupMessageModel);
-                        interfaceForGroupMessages.MessagesFromFireStore(groupMessageModelList);
+                    if (groupMessageModel == null){
+                        return;
+                    }else {
+                        if (groupMessageModel.getReceiver().equals(groupId)) {
+                            groupMessageModelList.add(groupMessageModel);
+                            interfaceForGroupMessages.MessagesFromFireStore(groupMessageModelList);
+                        }
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
                     }
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
+
                 }
             }
         });

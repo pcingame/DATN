@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,7 +27,6 @@ import com.bumptech.glide.Glide;
 import com.example.appchatdemo.CustomProgress;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.ChangePasswordActivity;
-import com.example.appchatdemo.activities.CreateGroupChatActivity;
 import com.example.appchatdemo.activities.MainActivity;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +40,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.shashank.sony.fancytoastlib.FancyToast;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -189,7 +186,7 @@ public class ProfileFragment extends Fragment {
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+                Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.from_right, R.anim.to_left);
             }

@@ -90,6 +90,8 @@
     <string name="validate_group_name">Tên nhóm không được để trống</string>
     <string name="create_group_success">Tạo nhóm thành công"</string>
     <string name="validate_group_member">Nhóm phải có hơn 2 thành viên trở lên</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="status">Trạng thái</string>
 
 
 </resources>

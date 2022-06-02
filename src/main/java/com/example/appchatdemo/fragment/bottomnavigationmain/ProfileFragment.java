@@ -27,6 +27,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.CustomProgress;
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.activities.ChangePasswordActivity;
+import com.example.appchatdemo.activities.CreateGroupChatActivity;
 import com.example.appchatdemo.activities.MainActivity;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,10 +53,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
 
     private AuthViewModel authViewModel;
-    private Button btnSignOut, btnUpdateProfile;
+    private Button btnSignOut, btnUpdateProfile, btnChangePassword;
     private CircleImageView imgUserAvatar;
     private ImageView imgPickImage;
-    private EditText edtUserName, edtStatus;
+    private EditText edtUserName, edtStatus, edtUserEmail;
 
     String userNameUpdated, userId, userStatusUpdated, imgUrl;
     FirebaseFirestore fireStore;
@@ -101,9 +103,11 @@ public class ProfileFragment extends Fragment {
 
         edtUserName = view.findViewById(R.id.edtUserName);
         edtStatus = view.findViewById(R.id.edtUserStatus);
+        edtUserEmail = view.findViewById(R.id.edtUserEmail);
 
         btnSignOut = view.findViewById(R.id.btn_sign_out);
         btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
+        btnChangePassword = view.findViewById(R.id.btnChangePassword);
 
         firebaseAuth = FirebaseAuth.getInstance();
         fireStore = FirebaseFirestore.getInstance();
@@ -182,6 +186,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.from_right, R.anim.to_left);
+            }
+        });
+
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String theUserId = firebaseUser.getUid();
 
@@ -192,11 +205,13 @@ public class ProfileFragment extends Fragment {
 
                     DocumentSnapshot snapshot = task.getResult();
                     String userName = snapshot.getString("username");
-                    String status = snapshot.getString("status");
+                    String userStatus = snapshot.getString("status");
+                    String userEmail = snapshot.getString("email");
                     imgUrl = snapshot.getString("imageUrl");
 
                     edtUserName.setText(userName);
-                    edtStatus.setText(status);
+                    edtStatus.setText(userStatus);
+                    edtUserEmail.setText(userEmail);
                     Glide.with(requireContext()).load(imgUrl).centerCrop().into(imgUserAvatar);
                 }
             }

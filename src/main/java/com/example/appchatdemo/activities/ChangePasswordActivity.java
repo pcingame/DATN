@@ -35,10 +35,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
         textInputRePassword = findViewById(R.id.text_input_confirm_password_sign_up);
         btnChangePassword = findViewById(R.id.btnChangePassword);
 
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        imgBack.setOnClickListener(v -> finish());
+
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
             }
         });
     }

@@ -71,7 +71,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:background="@color/edittextColor"
+                    android:enabled="false"
+                    android:textColor="@color/background_app"
                     android:hint="@string/user_name"
                     android:inputType="text|textCapSentences"
                     android:padding="10dp"
@@ -97,9 +98,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:background="@color/edittextColor"
                     android:hint="@string/email"
-                    android:textColor="@color/black"
+                    android:textColor="@color/background_app"
                     android:enabled="false"
                     android:padding="10dp"
                     android:textSize="16sp" />
@@ -125,50 +125,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:background="@color/edittextColor"
                     android:hint="@string/status"
                     android:inputType="text|textCapSentences"
+                    android:textColor="@color/background_app"
                     android:maxLines="1"
                     android:padding="10dp"
                     android:textSize="16sp" />
             </LinearLayout>
-
-            <!--<EditText
-                android:id="@+id/edtUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/edittextColor"
-                android:hint="@string/user_name"
-                android:inputType="text|textCapSentences"
-                android:padding="10dp"
-                android:enabled="false"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edtUserEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/edittextColor"
-                android:padding="10dp"
-                android:enabled="false"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/edtUserStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/edittextColor"
-                android:hint="Trạng thái"
-                android:inputType="text|textCapSentences"
-                android:padding="10dp"
-                android:text="Hey i,m using this app"
-                android:textColor="@color/black"
-                android:textSize="16sp" />-->
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -43,7 +43,9 @@
     <string name="sending">Đang gửi…</string>
     <string name="checking">Đang kiếm tra…</string>
     <string name="regex_username">[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ?]*</string>
-    <string name="forgot_enter_name">Bạn quên nhập tên kìa</string>
+    <string name="forgot_enter_status">Bạn quên nhập trạng thái kìa</string>
+    <string name="regex_status_error">Trạng thái không được chứa ký tự đặc biệt</string>
+    <string name="status_length_error">Tên người dùng không được vượt quá 50 ký tự</string>
     <string name="regex_username_error">Tên người dùng không được chứa ký tự đặc biệt</string>
     <string name="username_length_error">Tên người dùng không được vượt quá 50 ký tự</string>
     <string name="empty_email_error">Bạn quên nhập email kìa</string>

@@ -53,7 +53,7 @@ public class SignInFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.
-                getInstance(Objects.requireNonNull(getActivity()).getApplication())).get(AuthViewModel.class);
+                getInstance(requireActivity().getApplication())).get(AuthViewModel.class);
 
         viewModel.getUserData().observe(this, new Observer<FirebaseUser>() {
             @Override

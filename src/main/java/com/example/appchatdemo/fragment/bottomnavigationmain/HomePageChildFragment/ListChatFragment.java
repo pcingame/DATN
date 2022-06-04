@@ -97,7 +97,7 @@ public class ListChatFragment extends Fragment {
 
     private void fetchingList(ArrayList<String> listChat) {
         mUsers = new ArrayList<>();
-        firestore.collection("Users").orderBy("lastMessageTime", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("Users").orderBy("userId", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 mUsers.clear();

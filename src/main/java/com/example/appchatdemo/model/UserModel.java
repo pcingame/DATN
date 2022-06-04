@@ -10,26 +10,23 @@ public class UserModel implements Serializable {
     private String imageUrl;
     private String username;
     private String email;
+    private String password;
     private String status;
     private String activeStatus;
     private List<String> listChatPrivate;
-    private List<String> listChatGroup;
-    private Date lastMessageTime;
-
 
     public UserModel() {
     }
 
-    public UserModel(String userId, String imageUrl, String username, String email, String status, String activeStatus, List<String> listChatPrivate, List<String> listChatGroup, Date lastMessageTime) {
+    public UserModel(String userId, String imageUrl, String username, String email, String password, String status, String activeStatus, List<String> listChatPrivate) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.username = username;
         this.email = email;
+        this.password = password;
         this.status = status;
         this.activeStatus = activeStatus;
         this.listChatPrivate = listChatPrivate;
-        this.listChatGroup = listChatGroup;
-        this.lastMessageTime = lastMessageTime;
     }
 
     public String getUserId() {
@@ -88,19 +85,11 @@ public class UserModel implements Serializable {
         this.listChatPrivate = listChatPrivate;
     }
 
-    public List<String> getListChatGroup() {
-        return listChatGroup;
+    public String getPassword() {
+        return password;
     }
 
-    public void setListChatGroup(List<String> listChatGroup) {
-        this.listChatGroup = listChatGroup;
-    }
-
-    public Date getLastMessageTime() {
-        return lastMessageTime;
-    }
-
-    public void setLastMessageTime(Date lastMessageTime) {
-        this.lastMessageTime = lastMessageTime;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

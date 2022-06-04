@@ -85,10 +85,11 @@ public class AuthenticationRepository {
                     hashMap.put("imageUrl", imgLinkDefaultAvatar);
                     hashMap.put("username", name);
                     hashMap.put("email", email);
-                    hashMap.put("status", "offline");
+                    hashMap.put("password",password);
+                    hashMap.put("status", "Contact for work");
                     hashMap.put("activeStatus", "offline");
                     hashMap.put("listChatPrivate", Arrays.asList());
-                    hashMap.put("listChatGroup", Arrays.asList());
+                    /*hashMap.put("listChatGroup", Arrays.asList());*/
 
                     fireStore.collection("Users").document(userId).set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

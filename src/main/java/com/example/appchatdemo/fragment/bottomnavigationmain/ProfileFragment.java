@@ -154,20 +154,18 @@ public class ProfileFragment extends Fragment {
                         .setCancelable(false)
                         .setPositiveButton("OK",
                                 (dialog, id) -> {
-                                    userNameUpdated = edtUserName.getText().toString();
+                                    // userNameUpdated = edtUserName.getText().toString();
                                     userStatusUpdated = edtStatus.getText().toString();
 
-                                    if (userNameUpdated.isEmpty()) {
-                                        edtUserName.setError(getString(R.string.forgot_enter_name));
-                                    } else if (!userNameUpdated.matches(getString(R.string.regex_username))) {
-                                        edtUserName.setError(getString(R.string.regex_username_error));
-                                    } else if (userNameUpdated.length() > 50) {
-                                        edtUserName.setError(getString(R.string.username_length_error));
+                                    if (userStatusUpdated.isEmpty()) {
+                                        edtStatus.setError(getString(R.string.forgot_enter_status));
+                                    } else if (!userStatusUpdated.matches(getString(R.string.regex_username))) {
+                                        edtStatus.setError(getString(R.string.regex_status_error));
+                                    } else if (userStatusUpdated.length() > 50) {
+                                        edtStatus.setError(getString(R.string.status_length_error));
                                     } else {
-                                        updateProfile(userNameUpdated, userStatusUpdated);
+                                        updateProfile(userStatusUpdated);
                                     }
-
-
                                 })
 
                         .setNegativeButton("Ở lại", new DialogInterface.OnClickListener() {
@@ -340,13 +338,12 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void updateProfile(String userNameUpdated, String userStatusUpdated) {
+    private void updateProfile(String userStatusUpdated) {
 
         customProgress.showProgress(getContext(), getString(R.string.loading), false);
         String userIdAgain = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("username", userNameUpdated);
         hashMap.put("status", userStatusUpdated);
 
         fireStore.collection("Users").document(userIdAgain).update(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {

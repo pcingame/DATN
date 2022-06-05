@@ -242,7 +242,7 @@ public class PrivateMessageActivity extends AppCompatActivity {
 
         DocumentReference documentReference2 = fireStore.collection("Users").document(friendId);
         documentReference2.update("listChatPrivate", FieldValue.arrayUnion(userId));
-        documentReference2.update("lastMessageTime", date);
+      //  documentReference2.update("lastMessageTime", date);
 
         /*DocumentReference documentReference3 = fireStore.collection("Users").document(userId).collection("test").document(friendId);
         documentReference3.update("listChatPrivate", FieldValue.arrayUnion(userId));

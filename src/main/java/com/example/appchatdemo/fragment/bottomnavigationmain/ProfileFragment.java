@@ -154,9 +154,7 @@ public class ProfileFragment extends Fragment {
                         .setCancelable(false)
                         .setPositiveButton("OK",
                                 (dialog, id) -> {
-                                    // userNameUpdated = edtUserName.getText().toString();
                                     userStatusUpdated = edtStatus.getText().toString();
-
                                     if (userStatusUpdated.isEmpty()) {
                                         edtStatus.setError(getString(R.string.forgot_enter_status));
                                     } else if (!userStatusUpdated.matches(getString(R.string.regex_username))) {
@@ -167,17 +165,14 @@ public class ProfileFragment extends Fragment {
                                         updateProfile(userStatusUpdated);
                                     }
                                 })
-
                         .setNegativeButton("Ở lại", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-
                                 dialog.cancel();
                             }
                         });
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-
             }
         });
 

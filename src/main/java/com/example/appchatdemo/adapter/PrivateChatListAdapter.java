@@ -125,7 +125,6 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentSnapshot ds : value.getDocuments()) {
-
                     PrivateMessageModel privateMessageModel = ds.toObject(PrivateMessageModel.class);
                     if (privateMessageModel != null) {
                         if (privateMessageModel.getSender().equals(userId) && privateMessageModel.getReceiver().equals(friend)
@@ -134,7 +133,6 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
                             theLastMessage = privateMessageModel.getMessage();
                         }
                     }
-
                 }
                 switch (theLastMessage) {
                     case "default":

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,7 +63,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String userId = firebaseAuth.getCurrentUser().getUid();
-                String oldPass = edtOldPassword.getText().toString().trim();
                 String newPassword = edtConfirmPassword.getText().toString().trim();
                 isAllFieldsChecked = checkAllField();
                 if (isAllFieldsChecked) {
@@ -79,10 +79,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+                                                customProgress.showProgress(ChangePasswordActivity.this, "Đang kiểm tra", false);
                                                 changePassword(userId, newPassword);
                                             } else {
                                                 Toast.makeText(ChangePasswordActivity.this, "Đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
-
                                             }
                                         }
                                     });
@@ -127,9 +127,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(ChangePasswordActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    customProgress.hideProgress();
                     DocumentReference documentReference = fireStore.collection("Users").document(userId);
                     documentReference.update("password", newPassword);
+
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChangePasswordActivity.this);
                     alertDialogBuilder.setTitle(getString(R.string.notice));
                     alertDialogBuilder
@@ -138,7 +139,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             .setPositiveButton(getString(R.string.sign_out),
                                     (dialog, id) -> {
                                         signout();
-                                    });
+                                    }).setNegativeButton("Ở lại", (dialog, which) -> {
+                                dialog.dismiss();
+                                Intent intent = new Intent(ChangePasswordActivity.this, DashBoardActivity.class);
+                                startActivity(intent);
+                                finish();
+                            });
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 } else {
@@ -151,9 +157,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private void signout() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
-        Intent intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        finishActivity();
     }
 
     boolean validateEmpty(String field, TextInputLayout fieldScreen, String messageError, String messageInfo) {
@@ -175,15 +179,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        signout();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        signout();
+    public void finishActivity() {
+        Intent intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

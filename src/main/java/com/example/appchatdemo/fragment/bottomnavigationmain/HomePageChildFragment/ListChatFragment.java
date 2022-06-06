@@ -65,7 +65,8 @@ public class ListChatFragment extends Fragment {
         recyclerPrivateChatList = view.findViewById(R.id.recyclerPrivateChatList);
         recyclerPrivateChatList.setHasFixedSize(true);
         recyclerPrivateChatList.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setStackFromEnd(true);
         userId = firebaseAuth.getCurrentUser().getUid();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 

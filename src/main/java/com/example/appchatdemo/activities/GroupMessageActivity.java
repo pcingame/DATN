@@ -22,6 +22,8 @@ import com.example.appchatdemo.viewmodel.GroupMessageViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -138,9 +140,13 @@ public class GroupMessageActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+                    DocumentReference documentReference = fireStore.collection("Groups").document(groupId);
+                    documentReference.update("lastMessageGroupTime", date);
                 }
             }
         });
+
+
     }
 
     @Override

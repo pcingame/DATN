@@ -128,6 +128,7 @@ public class AddGroupMemberFragment extends Fragment {
                     group.put("groupName", takeName);
                     group.put("host", auth.getCurrentUser().getUid());
                     group.put("groupAvatar", imgLinkDefaultAvatar);
+                    group.put("lastMessageGroupTime", date);
                     for (int i = 0; i < listmember.size(); i++) {
                         group.put("memberList", Arrays.asList(listmember.toArray()));
                     }

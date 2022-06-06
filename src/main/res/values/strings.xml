@@ -97,7 +97,7 @@
     <string name="validate_group_member">Nhóm phải có hơn 2 thành viên trở lên</string>
     <string name="change_password">Đổi mật khẩu</string>
     <string name="status">Trạng thái</string>
-    <string name="change_pass_dialog">Đổi mật khẩu thành công. Bạn cần đăng nhập lại hoặc lần tiếp theo vào ứng dụng.</string>
+    <string name="change_pass_dialog">Đổi mật khẩu thành công. Bạn có muốn duy trì đăng nhập không.</string>
     <string name="notice">Thông báo</string>
 
 

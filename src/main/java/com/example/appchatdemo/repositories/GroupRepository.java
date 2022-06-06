@@ -12,6 +12,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -32,7 +33,7 @@ public class GroupRepository {
     public void getGroupUserJoinInFireStore() {
         String userId = auth.getCurrentUser().getUid();
 
-        firestore.collection("Groups").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("Groups").orderBy("lastMessageGroupTime", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 boolean checkMember = false;

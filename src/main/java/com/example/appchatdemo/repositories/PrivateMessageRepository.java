@@ -42,12 +42,9 @@ public class PrivateMessageRepository {
                     Log.e("AAA", "Listen failed.", error);
                     return;
                 }
-
                 privateMessageModelsList.clear();
                 for (DocumentSnapshot ds : value.getDocuments()) {
                     PrivateMessageModel privateMessageModel = ds.toObject(PrivateMessageModel.class);
-                    //only display conversation between two user
-                    //since every user will have different conversation
                     assert privateMessageModel != null;
                     if (privateMessageModel.getSender().equals(userId) && privateMessageModel.getReceiver().equals(friend)
                             || privateMessageModel.getReceiver().equals(userId)
@@ -58,8 +55,6 @@ public class PrivateMessageRepository {
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
-
-
                 }
             }
         });

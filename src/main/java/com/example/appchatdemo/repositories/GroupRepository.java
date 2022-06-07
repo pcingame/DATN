@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,6 @@ public class GroupRepository {
         firestore.collection("Groups").orderBy("lastMessageGroupTime", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                boolean checkMember = false;
                 groupModelList.clear();
                 for (DocumentSnapshot snapshot : value.getDocuments()) {
                     GroupModel groupModel = snapshot.toObject(GroupModel.class);

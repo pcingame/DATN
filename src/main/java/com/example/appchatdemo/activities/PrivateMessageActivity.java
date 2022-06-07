@@ -242,17 +242,24 @@ public class PrivateMessageActivity extends AppCompatActivity {
 
         DocumentReference documentReference2 = fireStore.collection("Users").document(friendId);
         documentReference2.update("listChatPrivate", FieldValue.arrayUnion(userId));
-      //  documentReference2.update("lastMessageTime", date);
 
-        /*DocumentReference documentReference3 = fireStore.collection("Users").document(userId).collection("test").document(friendId);
-        documentReference3.update("listChatPrivate", FieldValue.arrayUnion(userId));
-        documentReference3.update("lastMessageTime", date);
-*/
+        HashMap<String, Object> hashMap2 = new HashMap<>();
+        hashMap2.put("user1", userId);
+        hashMap2.put("user2", friendId);
+        hashMap2.put("lastMessageTime", date);
+
+        fireStore.collection("Users").document(userId).collection("chat")
+                .document(userId + "_" + friendId).set(hashMap2).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+            }
+        });
     }
 
     private void sendFile(String friendId, String file, String userId, String fileName, String fileType) {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
-       // SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd.MM");
+        // SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd.MM");
         Date date = new Date(System.currentTimeMillis());
         String currentTime = formatter.format(date);
 
@@ -281,7 +288,6 @@ public class PrivateMessageActivity extends AppCompatActivity {
 
         DocumentReference documentReference2 = fireStore.collection("Users").document(friendId);
         documentReference2.update("listChatPrivate", FieldValue.arrayUnion(userId));
-        documentReference2.update("lastMessageTime", date);
 
     }
 

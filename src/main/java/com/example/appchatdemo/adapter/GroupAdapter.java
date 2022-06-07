@@ -1,16 +1,19 @@
 package com.example.appchatdemo.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.R;
+import com.example.appchatdemo.activities.DashBoardActivity;
 import com.example.appchatdemo.interfaces.IClickItemGroupListener;
 import com.example.appchatdemo.model.GroupModel;
 
@@ -20,10 +23,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolder> {
 
+    private Context mContext;
     private List<GroupModel> groupModelList;
     private IClickItemGroupListener iClickItemGroupListener;
 
-    public GroupAdapter( IClickItemGroupListener iClickItemGroupListener) {
+    public GroupAdapter(Context mContext, IClickItemGroupListener iClickItemGroupListener) {
+        this.mContext = mContext;
         this.iClickItemGroupListener = iClickItemGroupListener;
     }
 

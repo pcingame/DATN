@@ -17,7 +17,6 @@ import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.PrivateMessageActivity;
 import com.example.appchatdemo.adapter.PrivateChatListAdapter;
 import com.example.appchatdemo.interfaces.IClickItemUserListener;
-import com.example.appchatdemo.model.PrivateChatListModel;
 import com.example.appchatdemo.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +42,6 @@ public class ListChatFragment extends Fragment {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     String userId;
-    private List<PrivateChatListModel> privateChatList;
     private ArrayList<String> listChat;
     FirebaseUser fuser;
 
@@ -69,8 +67,6 @@ public class ListChatFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         userId = firebaseAuth.getCurrentUser().getUid();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-
-        privateChatList = new ArrayList<>();
         getListChat();
     }
 
@@ -84,7 +80,7 @@ public class ListChatFragment extends Fragment {
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if (documentSnapshot.exists()) {
                         listChat = (ArrayList<String>) documentSnapshot.get("listChatPrivate");
-                        if (listChat == null) {
+                        if (listChat.size() == 0) {
                             FancyToast.makeText(getContext(), "Chưa có tin nhắn nào", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
                         } else {
                             fetchingList(listChat);

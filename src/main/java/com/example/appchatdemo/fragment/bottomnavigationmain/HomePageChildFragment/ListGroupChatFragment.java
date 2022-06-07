@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,17 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class ListGroupChatFragment extends Fragment {
 
     private FloatingActionButton btnFloat;
     FirebaseAuth auth;
     FirebaseStorage fireStore;
-    String userId;
     RecyclerView rcvGroup;
     GroupAdapter groupAdapter;
     GroupViewModel groupViewModel;
-    List<GroupModel> groupList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +57,7 @@ public class ListGroupChatFragment extends Fragment {
         rcvGroup.setHasFixedSize(true);
         rcvGroup.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        groupList = new ArrayList<>();
-        groupAdapter = new GroupAdapter(new IClickItemGroupListener() {
+        groupAdapter = new GroupAdapter(getContext(), new IClickItemGroupListener() {
             @Override
             public void onClickItemGroup(GroupModel groupModel) {
                 onClickGoToGroupMessage(groupModel);
@@ -72,6 +69,9 @@ public class ListGroupChatFragment extends Fragment {
         groupViewModel.getAllGroupJoin().observe(getViewLifecycleOwner(), new Observer<List<GroupModel>>() {
             @Override
             public void onChanged(List<GroupModel> groupModels) {
+                if (groupModels.size() == 0) {
+                    Toast.makeText(getContext(), "Chưa có nhóm nào", Toast.LENGTH_SHORT).show();
+                }
                 groupAdapter.setGroupModelList(groupModels);
                 rcvGroup.setAdapter(groupAdapter);
                 groupAdapter.notifyDataSetChanged();
@@ -80,12 +80,9 @@ public class ListGroupChatFragment extends Fragment {
 
         btnFloat = view.findViewById(R.id.add_group_chat);
 
-        btnFloat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateGroupChatActivity.class);
-                startActivity(intent);
-            }
+        btnFloat.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), CreateGroupChatActivity.class);
+            startActivity(intent);
         });
     }
 

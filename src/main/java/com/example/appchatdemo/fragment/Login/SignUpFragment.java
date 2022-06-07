@@ -127,6 +127,7 @@ public class SignUpFragment extends Fragment {
                                 if (defaultInformationModel.getEmailInfo().equals(email)) {
                                     check = true;
                                     name = defaultInformationModel.getNameInfo();
+                                    break;
                                 } else {
                                     check = false;
                                 }

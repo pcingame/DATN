@@ -12,11 +12,13 @@ public class GroupMessageModel {
     private Date date;
     private String fileName;
     private String fileType;
+    private String memberName;
+    private String avatarLink;
 
     public GroupMessageModel() {
     }
 
-    public GroupMessageModel(String sender, String receiver, String time, String message, String file, Date date, String fileName, String fileType) {
+    public GroupMessageModel(String sender, String receiver, String time, String message, String file, Date date, String fileName, String fileType, String memberName, String avatarLink) {
         this.sender = sender;
         this.receiver = receiver;
         this.time = time;
@@ -25,6 +27,8 @@ public class GroupMessageModel {
         this.date = date;
         this.fileName = fileName;
         this.fileType = fileType;
+        this.memberName = memberName;
+        this.avatarLink = avatarLink;
     }
 
     public String getSender() {
@@ -89,5 +93,21 @@ public class GroupMessageModel {
 
     public void setFileType(String fileType) {
         this.fileType = fileType;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getAvatarLink() {
+        return avatarLink;
+    }
+
+    public void setAvatarLink(String avatarLink) {
+        this.avatarLink = avatarLink;
     }
 }

@@ -8,12 +8,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.interfaces.IClickItemFileInGroup;
 import com.example.appchatdemo.model.GroupMessageModel;
+import com.example.appchatdemo.model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +31,8 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
 
     List<GroupMessageModel> groupMessageModelList;
     private IClickItemFileInGroup iClickItemFileInGroup;
+    private String memberName;
+    private String avatarLink;
 
     public static final int MESSAGE_RIGHT = 0;//for user layout
     public static final int MESSAGE_LEFT = 1;//for group layout
@@ -40,11 +51,11 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
     @Override
     public GroupMessageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == MESSAGE_RIGHT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatitemright,
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatitem_right_group,
                     parent, false);
             return new GroupMessageHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatitemleft,
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatitem_left_group,
                     parent, false);
             return new GroupMessageHolder(view);
         }
@@ -61,6 +72,8 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
         holder.tvTime.setVisibility(View.VISIBLE);
         holder.tvShowMessage.setText(groupMessageModelList.get(position).getMessage());
         holder.tvTime.setText(groupMessageModelList.get(position).getTime());
+        holder.tvMemberName.setText(messageModel.getMemberName());
+        Glide.with(holder.itemView.getContext()).load(messageModel.getAvatarLink()).centerCrop().into(holder.imgAvatar);
 
         holder.layoutFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +95,8 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
 
     public class GroupMessageHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvShowMessage, tvTime, tvFileName;
-        private ImageView imgMessage, imgFile;
+        private TextView tvShowMessage, tvTime, tvFileName, tvMemberName;
+        private ImageView imgMessage, imgFile, imgAvatar;
         private LinearLayout layoutFile;
 
         public GroupMessageHolder(@NonNull View itemView) {
@@ -95,6 +108,9 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
             layoutFile = itemView.findViewById(R.id.layout_file);
             imgFile = itemView.findViewById(R.id.imgFile);
             tvFileName = itemView.findViewById(R.id.tvFileName);
+            imgAvatar = itemView.findViewById(R.id.imgAvatarMess);
+            tvMemberName = itemView.findViewById(R.id.tvGroupMemberName);
+
         }
     }
 

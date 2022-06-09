@@ -9,13 +9,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.DashBoardActivity;
 import com.example.appchatdemo.interfaces.IClickItemGroupListener;
+import com.example.appchatdemo.model.GroupMessageModel;
 import com.example.appchatdemo.model.GroupModel;
+import com.example.appchatdemo.model.PrivateMessageModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -26,6 +35,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
     private Context mContext;
     private List<GroupModel> groupModelList;
     private IClickItemGroupListener iClickItemGroupListener;
+
+    private String theLastGroupMessage;
 
     public GroupAdapter(Context mContext, IClickItemGroupListener iClickItemGroupListener) {
         this.mContext = mContext;
@@ -59,7 +70,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
         }
         Glide.with(holder.itemView.getContext()).load(groupModelList.get(position).getGroupAvatar()).centerCrop().into(holder.groupImg);
         holder.groupName.setText(groupModel.getGroupName());
-        holder.groupNewest.setText("have new message");
+        lastMessage(groupModel.getGroupId(), holder.groupNewest);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,10 +97,40 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
         public MyGroupHolder(@NonNull View itemView) {
             super(itemView);
 
-            groupImg = itemView.findViewById(R.id.group_img);
-            groupName = itemView.findViewById(R.id.group_name);
-            groupNewest = itemView.findViewById(R.id.group_newest);
+            groupImg = itemView.findViewById(R.id.imgGroupN);
+            groupName = itemView.findViewById(R.id.tvGroupNameN);
+            groupNewest = itemView.findViewById(R.id.tvLastMessageGroup);
             layout = itemView.findViewById(R.id.group_layout);
         }
+    }
+
+    private void lastMessage(final String groupId, final TextView last_msg) {
+        theLastGroupMessage = "default";
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
+
+        fireStore.collection("GroupMessages").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentSnapshot ds : value.getDocuments()) {
+                    GroupMessageModel groupMessageModel = ds.toObject(GroupMessageModel.class);
+                    if (groupMessageModel != null) {
+                        if (groupMessageModel.getReceiver().equals(groupId)) {
+                            theLastGroupMessage = groupMessageModel.getMessage();
+                        }
+                    }
+                }
+                switch (theLastGroupMessage) {
+                    case "default":
+                        last_msg.setText("No Message");
+                        break;
+
+                    default:
+                        last_msg.setText(theLastGroupMessage);
+                        break;
+                }
+                theLastGroupMessage = "default";
+            }
+        });
     }
 }

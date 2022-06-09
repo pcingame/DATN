@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,13 +19,18 @@ import com.example.appchatdemo.interfaces.IClickItemFileInGroup;
 import com.example.appchatdemo.databinding.ActivityGroupMessageBinding;
 import com.example.appchatdemo.model.GroupMessageModel;
 import com.example.appchatdemo.model.GroupModel;
+import com.example.appchatdemo.model.UserModel;
 import com.example.appchatdemo.viewmodel.GroupMessageViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +45,7 @@ public class GroupMessageActivity extends AppCompatActivity {
     FirebaseFirestore fireStore;
     FirebaseAuth firebaseAuth;
 
-    private String groupId, groupName, groupAvatar, message, yourId;
+    private String groupId, groupName, groupAvatar, message, yourId, memberName, avatarLink;
     private int position, memberCount;
 
     private GroupMessageViewModel groupMessageViewModel;
@@ -125,8 +131,23 @@ public class GroupMessageActivity extends AppCompatActivity {
         Date date = new Date(System.currentTimeMillis());
         String currentTime = formatter.format(date);
 
-        HashMap<String, Object> hashMap = new HashMap<>();
+        fireStore.collection("Users").document(yourId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String username = document.get("username").toString();
+                        String avatar = document.get("imageUrl").toString();
+                        send(yourId, groupId, message, currentTime, date, username, avatar);
+                    }
+                }
+            }
+        });
+    }
 
+    private void send(String yourId, String groupId, String message, String currentTime, Date date, String username, String avatar) {
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", yourId);
         hashMap.put("receiver", groupId);
         hashMap.put("message", message);
@@ -135,6 +156,8 @@ public class GroupMessageActivity extends AppCompatActivity {
         hashMap.put("date", date);
         hashMap.put("fileName", "");
         hashMap.put("fileType", "");
+        hashMap.put("memberName", username);
+        hashMap.put("avatarLink", avatar);
 
         fireStore.collection("GroupMessages").document(currentTime).set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -145,8 +168,6 @@ public class GroupMessageActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     @Override

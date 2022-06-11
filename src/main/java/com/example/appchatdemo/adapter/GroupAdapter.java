@@ -37,6 +37,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
     private IClickItemGroupListener iClickItemGroupListener;
 
     private String theLastGroupMessage;
+    private String theLastTime;
 
     public GroupAdapter(Context mContext, IClickItemGroupListener iClickItemGroupListener) {
         this.mContext = mContext;
@@ -70,7 +71,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
         }
         Glide.with(holder.itemView.getContext()).load(groupModelList.get(position).getGroupAvatar()).centerCrop().into(holder.groupImg);
         holder.groupName.setText(groupModel.getGroupName());
-        lastMessage(groupModel.getGroupId(), holder.groupNewest);
+        lastMessage(groupModel.getGroupId(), holder.groupNewest, holder.tvTime);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +92,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
 
     public class MyGroupHolder extends RecyclerView.ViewHolder{
         private CircleImageView groupImg;
-        private TextView groupName, groupNewest;
+        private TextView groupName, groupNewest, tvTime;
         private RelativeLayout layout;
 
         public MyGroupHolder(@NonNull View itemView) {
@@ -100,12 +101,14 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
             groupImg = itemView.findViewById(R.id.imgGroupN);
             groupName = itemView.findViewById(R.id.tvGroupNameN);
             groupNewest = itemView.findViewById(R.id.tvLastMessageGroup);
+            tvTime = itemView.findViewById(R.id.tvTime);
             layout = itemView.findViewById(R.id.group_layout);
         }
     }
 
-    private void lastMessage(final String groupId, final TextView last_msg) {
+    private void lastMessage(final String groupId,  final TextView last_msg, TextView tvTime) {
         theLastGroupMessage = "default";
+        theLastTime = "";
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
 
@@ -116,17 +119,20 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
                     GroupMessageModel groupMessageModel = ds.toObject(GroupMessageModel.class);
                     if (groupMessageModel != null) {
                         if (groupMessageModel.getReceiver().equals(groupId)) {
-                            theLastGroupMessage = groupMessageModel.getMessage();
+                            theLastGroupMessage = groupMessageModel.getMemberName() + ": " + groupMessageModel.getMessage();
+                            theLastTime = groupMessageModel.getTime();
                         }
                     }
                 }
                 switch (theLastGroupMessage) {
                     case "default":
                         last_msg.setText("No Message");
+                        tvTime.setText("");
                         break;
 
                     default:
                         last_msg.setText(theLastGroupMessage);
+                        tvTime.setText(theLastTime);
                         break;
                 }
                 theLastGroupMessage = "default";

@@ -99,6 +99,12 @@
     <string name="status">Trạng thái</string>
     <string name="change_pass_dialog">Đổi mật khẩu thành công. Bạn có muốn duy trì đăng nhập không.</string>
     <string name="notice">Thông báo</string>
-
+    <string name="signin_network">Bạn cần kết nối mạng để đăng nhập</string>
+    <string name="signup_network">Bạn cần kết nối mạng để đăng ký</string>
+    <string name="forgot_network">Bạn cần kết nối mạng để thực hiện lấy lại mật khẩu</string>
+    <string name="oops">OOPS!</string>
+    <string name="no_internet">Mất kết nối mạng</string>
+    <string name="check_internet">Vui lòng kiểm tra kết nối mạng của bạn</string>
+    <string name="retry">Thử lại</string>
 
 </resources>

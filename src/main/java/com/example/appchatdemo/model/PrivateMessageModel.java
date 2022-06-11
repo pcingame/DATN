@@ -12,11 +12,12 @@ public class PrivateMessageModel {
     private Date date;
     private String fileName;
     private String fileType;
+    private String id;
 
     public PrivateMessageModel() {
     }
 
-    public PrivateMessageModel(String sender, String receiver, String time, String message, String file, Date date, String fileName, String fileType) {
+    public PrivateMessageModel(String sender, String receiver, String time, String message, String file, Date date, String fileName, String fileType, String id) {
         this.sender = sender;
         this.receiver = receiver;
         this.time = time;
@@ -25,6 +26,15 @@ public class PrivateMessageModel {
         this.date = date;
         this.fileName = fileName;
         this.fileType = fileType;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSender() {

@@ -1,6 +1,8 @@
 package com.example.appchatdemo.activities;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -20,10 +22,12 @@ import com.example.appchatdemo.databinding.ActivityGroupMessageBinding;
 import com.example.appchatdemo.model.GroupMessageModel;
 import com.example.appchatdemo.model.GroupModel;
 import com.example.appchatdemo.model.UserModel;
+import com.example.appchatdemo.utility.NetworkChangeListener;
 import com.example.appchatdemo.viewmodel.GroupMessageViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -45,12 +49,13 @@ public class GroupMessageActivity extends AppCompatActivity {
     FirebaseFirestore fireStore;
     FirebaseAuth firebaseAuth;
 
-    private String groupId, groupName, groupAvatar, message, yourId, memberName, avatarLink;
+    private String groupId, groupName, groupAvatar, message, yourId;
     private int position, memberCount;
-
+    private String userIdd;
     private GroupMessageViewModel groupMessageViewModel;
     List<GroupMessageModel> groupMessageModelList;
     GroupMessageAdapter groupMessageAdapter;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,8 +181,42 @@ public class GroupMessageActivity extends AppCompatActivity {
         finish();
     }
 
+    public void setIsOnline(String isOnline) {
+        FirebaseUser userOfFirebase = FirebaseAuth.getInstance().getCurrentUser();
+        if (userOfFirebase != null) {
+            userIdd = userOfFirebase.getUid();
+        }
+
+        fireStore.collection("Users").document(userIdd).update("activeStatus", isOnline).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setIsOnline("online");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        setIsOnline("offline");
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, intentFilter);
+        super.onStart();
+    }
+
     @Override
     protected void onStop() {
+        unregisterReceiver(networkChangeListener);
         super.onStop();
     }
 }

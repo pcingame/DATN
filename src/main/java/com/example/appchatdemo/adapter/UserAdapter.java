@@ -62,6 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
         holder.tvUserName.setText(userModel.getUsername());
         Glide.with(holder.itemView.getContext()).load(userModelList.get(position).getImageUrl()).centerCrop().into(holder.imgAvatar);
         holder.tvUserEmail.setText(userModel.getEmail());
+        holder.tvStatus.setText(userModel.getStatus());
         if (userModelList.get(position).getActiveStatus().equals("online")) {
             holder.imgIsOnline.setImageResource(R.drawable.online);
         } else {
@@ -89,7 +90,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
 
     class MyUserHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
-        private TextView tvUserName, tvUserEmail;
+        private TextView tvUserName, tvUserEmail, tvStatus;
         private CircleImageView imgAvatar;
         private ImageView imgIsOnline;
         private RelativeLayout layoutItemContact;
@@ -99,6 +100,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyUserHolder> 
 
             tvUserName = itemView.findViewById(R.id.userNameFrag);
             tvUserEmail = itemView.findViewById(R.id.tvUserNameEmail);
+            tvStatus = itemView.findViewById(R.id.userStatusFrag);
             imgAvatar = itemView.findViewById(R.id.imageViewUser);
             imgIsOnline = itemView.findViewById(R.id.imgIsOnline);
             layoutItemContact = itemView.findViewById(R.id.layout_item_contact);

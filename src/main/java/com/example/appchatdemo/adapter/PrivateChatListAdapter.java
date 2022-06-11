@@ -54,7 +54,7 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
     @NonNull
     @Override
     public PrivateChatListAdapter.PrivateChatListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item_layout,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item_chat_layout,
                 parent, false);
         return new PrivateChatListHolder(view);
     }

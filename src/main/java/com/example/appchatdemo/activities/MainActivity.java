@@ -18,8 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseFirestore fireStore;
-    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

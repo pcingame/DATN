@@ -1,4 +1,4 @@
-package com.example.appchatdemo;
+package com.example.appchatdemo.utility;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.appchatdemo.R;
 
 public class CustomProgress {
     public static CustomProgress customProgress = null;

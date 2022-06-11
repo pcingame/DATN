@@ -1,7 +1,6 @@
 package com.example.appchatdemo.fragment.Login;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.appchatdemo.CustomProgress;
+import com.example.appchatdemo.utility.CheckNetwork;
+import com.example.appchatdemo.utility.CustomProgress;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.model.DefaultInformationModel;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,7 +47,7 @@ public class SignUpFragment extends Fragment {
     private Boolean isAllFieldsChecked = false;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
-
+    CheckNetwork checkNetwork = new CheckNetwork();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,37 +111,40 @@ public class SignUpFragment extends Fragment {
 
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
+                if (checkNetwork.isNetworkAvailable(getContext())) {
 
-                customProgress.showProgress(getContext(), getString(R.string.signing_up), true);
-                isAllFieldsChecked = CheckAllFields();
+                    customProgress.showProgress(getContext(), getString(R.string.signing_up), true);
+                    isAllFieldsChecked = CheckAllFields();
 
-                if (isAllFieldsChecked) {
-                    fireStore.collection("DefaultInformation").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            boolean check = false;
-                            String name = "";
-                            for (DocumentSnapshot snapshot : value.getDocuments()) {
-                                DefaultInformationModel defaultInformationModel = snapshot.toObject(DefaultInformationModel.class);
-                                if (defaultInformationModel.getEmailInfo().equals(email)) {
-                                    check = true;
-                                    name = defaultInformationModel.getNameInfo();
-                                    break;
+                    if (isAllFieldsChecked) {
+                        fireStore.collection("DefaultInformation").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                boolean check = false;
+                                String name = "";
+                                for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                    DefaultInformationModel defaultInformationModel = snapshot.toObject(DefaultInformationModel.class);
+                                    if (defaultInformationModel.getEmailInfo().equals(email)) {
+                                        check = true;
+                                        name = defaultInformationModel.getNameInfo();
+                                        break;
+                                    } else {
+                                        check = false;
+                                    }
+                                }
+                                if (check) {
+                                    authViewModel.register(name, email, password);
                                 } else {
-                                    check = false;
+                                    FancyToast.makeText(getContext(), "Địa chỉ email không khớp với bất kỳ nhân viên nào. Vui lòng kiểm tra lại", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
+                                    customProgress.hideProgress();
                                 }
                             }
-                            if (check) {
-                                authViewModel.register(name, email, password);
-                            } else {
-                                FancyToast.makeText(getContext(), "Địa chỉ email không khớp với bất kỳ nhân viên nào. Vui lòng kiểm tra lại", Toast.LENGTH_SHORT, FancyToast.WARNING, false).show();
-                                customProgress.hideProgress();
-                            }
-                        }
-                    });
-
+                        });
+                    } else {
+                        customProgress.hideProgress();
+                    }
                 } else {
-                    customProgress.hideProgress();
+                    FancyToast.makeText(getContext(), getString(R.string.signup_network), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
 

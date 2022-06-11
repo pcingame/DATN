@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,21 +14,18 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.appchatdemo.CustomProgress;
+import com.example.appchatdemo.utility.CheckNetwork;
+import com.example.appchatdemo.utility.CustomProgress;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shashank.sony.fancytoastlib.FancyToast;
-
-import java.util.Objects;
 
 public class ForgotPasswordFragment extends Fragment {
 
@@ -40,6 +36,7 @@ public class ForgotPasswordFragment extends Fragment {
     private AuthViewModel authViewModel;
     public CustomProgress customProgress = CustomProgress.getInstance();
     FirebaseAuth auth;
+    CheckNetwork checkNetwork = new CheckNetwork();
 
 
     @Override
@@ -88,12 +85,15 @@ public class ForgotPasswordFragment extends Fragment {
 
     private void onClickForgotPassword() {
         String email = edtInputEmail.getText().toString();
-        customProgress.showProgress(getContext(), getString(R.string.checking), true);
-        forgotPassword(email);
+        if (checkNetwork.isNetworkAvailable(getContext())) {
+            customProgress.showProgress(getContext(), getString(R.string.checking), true);
+            forgotPassword(email);
+        } else {
+            FancyToast.makeText(getContext(), getString(R.string.forgot_network), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+        }
     }
 
     private void forgotPassword(String email) {
-
         auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -119,7 +119,7 @@ public class ForgotPasswordFragment extends Fragment {
         });
     }
 
-    private TextWatcher checkEmail = new TextWatcher() {
+    private final TextWatcher checkEmail = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -128,17 +128,13 @@ public class ForgotPasswordFragment extends Fragment {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String email = edtInputEmail.getText().toString().trim();
-            //String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
             String emailPattern2 = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+.+[a-z]+";
 
-
-            if ( email.matches(emailPattern2)  && s.length() > 0){
+            if (email.matches(emailPattern2) && s.length() > 0) {
                 btnSend.setEnabled(true);
-            }else {
+            } else {
                 btnSend.setEnabled(false);
             }
-
-           // btnSend.setEnabled(!email.isEmpty());
         }
 
         @Override

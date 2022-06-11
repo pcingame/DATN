@@ -24,7 +24,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.example.appchatdemo.CustomProgress;
+import com.example.appchatdemo.utility.CustomProgress;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.ChangePasswordActivity;
 import com.example.appchatdemo.activities.MainActivity;

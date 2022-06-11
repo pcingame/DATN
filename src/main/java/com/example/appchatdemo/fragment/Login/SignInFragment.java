@@ -21,14 +21,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.appchatdemo.CustomProgress;
+import com.example.appchatdemo.utility.CheckNetwork;
+import com.example.appchatdemo.utility.CustomProgress;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.activities.DashBoardActivity;
 import com.example.appchatdemo.viewmodel.AuthViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.shashank.sony.fancytoastlib.FancyToast;
-
-import java.util.Objects;
 
 
 public class SignInFragment extends Fragment {
@@ -39,6 +38,7 @@ public class SignInFragment extends Fragment {
     private Button btnSignIn;
     private TextView tvSignUp, tvForgotPassword;
     CustomProgress customProgress = CustomProgress.getInstance();
+    CheckNetwork checkNetwork = new CheckNetwork();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class SignInFragment extends Fragment {
         viewModel.getUserData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
-                if(firebaseUser != null){
+                if (firebaseUser != null) {
                     Intent intent = new Intent(getActivity(), DashBoardActivity.class);
                     startActivity(intent);
                 }
@@ -111,16 +111,18 @@ public class SignInFragment extends Fragment {
                 String password = edtPassword.getText().toString().trim();
                 String emailPattern2 = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+.+[a-z]+";
 
-                if ( !email.matches(emailPattern2) || email.isEmpty()){
-                    FancyToast.makeText(getContext(), getString(R.string.invalid_information), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }else if(password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))){
-                    FancyToast.makeText(getContext(), getString(R.string.exist_account_login_vn), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                if (checkNetwork.isNetworkAvailable(getContext())) {
+                    if (!email.matches(emailPattern2) || email.isEmpty()) {
+                        FancyToast.makeText(getContext(), getString(R.string.invalid_information), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    } else if (password.length() < 6 || password.length() > 29 || !password.matches(getString(R.string.regex_password))) {
+                        FancyToast.makeText(getContext(), getString(R.string.exist_account_login_vn), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    } else {
+                        customProgress.showProgress(getContext(), getString(R.string.loading), true);
+                        viewModel.signIn(email, password);
+                    }
+                } else {
+                    FancyToast.makeText(getContext(), getString(R.string.signin_network), Toast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
-                else {
-                    customProgress.showProgress(getContext(), getString(R.string.loading), true);
-                    viewModel.signIn(email, password);
-                }
-
             }
         });
     }

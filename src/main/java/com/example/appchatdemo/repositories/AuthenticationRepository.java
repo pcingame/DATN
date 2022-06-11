@@ -1,25 +1,12 @@
 package com.example.appchatdemo.repositories;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.example.appchatdemo.CustomProgress;
+import com.example.appchatdemo.utility.CustomProgress;
 import com.example.appchatdemo.R;
-import com.example.appchatdemo.fragment.Login.ForgotPasswordFragment;
-import com.example.appchatdemo.fragment.Login.SignInFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

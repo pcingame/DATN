@@ -2,6 +2,8 @@ package com.example.appchatdemo.activities;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,8 @@ import com.example.appchatdemo.databinding.ActivityDashBoardBinding;
 import com.example.appchatdemo.fragment.bottomnavigationmain.HomePageFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.MemberFragment;
 import com.example.appchatdemo.fragment.bottomnavigationmain.ProfileFragment;
+import com.example.appchatdemo.utility.CheckNetwork;
+import com.example.appchatdemo.utility.NetworkChangeListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +36,8 @@ public class DashBoardActivity extends AppCompatActivity {
     FirebaseFirestore fireStore;
     private String userId;
     private int mCurrentFragment = FRAGMENT_HOME;
+    CheckNetwork checkNetwork = new CheckNetwork();
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -135,6 +141,7 @@ public class DashBoardActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -145,5 +152,18 @@ public class DashBoardActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         setIsOnline("offline");
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, intentFilter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

@@ -45,8 +45,23 @@
                 app:layout_constraintLeft_toRightOf="@id/imgGroupN"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/user_name"
+                android:maxLength="30"
                 android:textStyle="normal"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tvLastMessageGroup"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/user_name"
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                android:maxLength="5"
                 android:textSize="16sp" />
 
 

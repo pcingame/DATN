@@ -103,7 +103,7 @@ public class ListChatFragment extends Fragment {
     private void fetchingList(ArrayList<String> listChat) {
         mUsers = new ArrayList<>();
         listTime = new ArrayList<>();
-        firestore.collection("Users").orderBy("username", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 mUsers.clear();
@@ -112,33 +112,10 @@ public class ListChatFragment extends Fragment {
                     UserModel userModel = ds.toObject(UserModel.class);
                     for (int i = 0; i < listChat.size(); i++) {
                         if (userModel.getUserId().equals(listChat.get(i))) {
-
-                            /*List<String> list = new ArrayList<>();
-                            list.add(userId + listChat.get(i));
-                            list.add(listChat.get(i) + userId);
-                            String id = listChat.get(i);
-                            firestore.collection("PrivateMessages").whereIn("id", list).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                    for (DocumentSnapshot ds : value.getDocuments()) {
-                                        listTime.add(ds.get("time").toString() + "_id:" + id);
-
-                                    }
-
-                                }
-                            });*/
-                         //   Log.d("ccc", listTime.toString());
                             mUsers.add(userModel);
                         }
                     }
                 }
-              //  Log.e("BBB", listTime.toString());
-                /*mUsers.sort(new Comparator<UserModel>() {
-                    @Override
-                    public int compare(UserModel o1, UserModel o2) {
-                        return map.get(o2.getUserId()).compareTo(map.get(o1.getUserId()));
-                    }
-                });*/
                 privateChatListAdapter = new PrivateChatListAdapter(getContext(), mUsers, new IClickItemUserListener() {
                     @Override
                     public void onClickItemUser(UserModel userModel) {

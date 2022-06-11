@@ -41,9 +41,9 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
     private Context mContext;
     private List<UserModel> userModelList;
     private IClickItemUserListener iClickItemUserListener;
-    List<PrivateMessageModel> privateMessageModelsList = new ArrayList<>();
 
     private String theLastMessage;
+    private String theLastMessageTime;
 
     public PrivateChatListAdapter(Context mContext, List<UserModel> userModelList, IClickItemUserListener iClickItemUserListener) {
         this.mContext = mContext;
@@ -74,7 +74,7 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
         } else {
             holder.imgIsOnline.setImageResource(R.drawable.offline);
         }
-        lastMessage(userModel.getUserId(), holder.tvLastMessger);
+        lastMessage(userModel.getUserId(), holder.tvLastMessger, holder.tvTime);
         holder.layoutItemContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +94,7 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
 
     class PrivateChatListHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvUserName, tvLastMessger;
+        private TextView tvUserName, tvLastMessger, tvTime;
         private CircleImageView imgAvatar;
         private ImageView imgIsOnline;
         private RelativeLayout layoutItemContact;
@@ -104,6 +104,7 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
 
             tvUserName = itemView.findViewById(R.id.userNameFrag);
             tvLastMessger = itemView.findViewById(R.id.tvUserNameEmail);
+            tvTime = itemView.findViewById(R.id.tvTimeP);
             imgAvatar = itemView.findViewById(R.id.imageViewUser);
             imgIsOnline = itemView.findViewById(R.id.imgIsOnline);
             layoutItemContact = itemView.findViewById(R.id.layout_item_contact);
@@ -113,15 +114,16 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
     }
 
     //check for last message
-    private void lastMessage(final String friend, final TextView last_msg) {
+    private void lastMessage(final String friend, final TextView last_msg, TextView tvLastTime) {
         theLastMessage = "default";
+        theLastMessageTime = "";
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
         String userId;
         userId = auth.getCurrentUser().getUid();
 
-        fireStore.collection("PrivateMessages").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fireStore.collection("PrivateMessages").orderBy("date").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentSnapshot ds : value.getDocuments()) {
@@ -130,17 +132,24 @@ public class PrivateChatListAdapter extends RecyclerView.Adapter<PrivateChatList
                         if (privateMessageModel.getSender().equals(userId) && privateMessageModel.getReceiver().equals(friend)
                                 || privateMessageModel.getReceiver().equals(userId)
                                 && privateMessageModel.getSender().equals(friend)) {
-                            theLastMessage = privateMessageModel.getMessage();
+                            if (privateMessageModel.getSender().equals(userId)) {
+                                theLastMessage = "Bạn: " + privateMessageModel.getMessage();
+                            } else {
+                                theLastMessage = privateMessageModel.getMessage();
+                            }
+                            theLastMessageTime = privateMessageModel.getTime();
                         }
                     }
                 }
                 switch (theLastMessage) {
                     case "default":
                         last_msg.setText("No Message");
+                        tvLastTime.setText("");
                         break;
 
                     default:
                         last_msg.setText(theLastMessage);
+                        tvLastTime.setText(theLastMessageTime);
                         break;
                 }
                 theLastMessage = "default";

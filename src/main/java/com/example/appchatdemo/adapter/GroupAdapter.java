@@ -26,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -111,8 +113,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
         theLastTime = "";
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
+        String userId = auth.getCurrentUser().getUid();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+        Date date = new Date(System.currentTimeMillis());
+        String currentTime = formatter.format(date);
 
-        fireStore.collection("GroupMessages").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fireStore.collection("GroupMessages").orderBy("date").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentSnapshot ds : value.getDocuments()) {

@@ -32,10 +32,9 @@
                 android:layout_marginStart="10dp"
                 app:layout_constraintLeft_toRightOf="@id/imgGroupN"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/user_name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                />
 
             <TextView
                 android:id="@+id/tvLastMessageGroup"
@@ -44,10 +43,9 @@
                 android:layout_marginStart="10dp"
                 app:layout_constraintLeft_toRightOf="@id/imgGroupN"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/user_name"
                 android:maxLength="30"
                 android:textStyle="normal"
-                android:textColor="@color/black"
+                android:textColor="@color/background_app"
                 android:textSize="16sp" />
 
             <TextView
@@ -58,7 +56,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/tvLastMessageGroup"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/user_name"
                 android:textStyle="normal"
                 android:textColor="@color/black"
                 android:maxLength="5"

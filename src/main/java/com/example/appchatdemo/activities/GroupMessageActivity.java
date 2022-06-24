@@ -1,5 +1,6 @@
 package com.example.appchatdemo.activities;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,22 +12,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appchatdemo.R;
 import com.example.appchatdemo.adapter.GroupMessageAdapter;
-import com.example.appchatdemo.interfaces.IClickItemFileInGroup;
+import com.example.appchatdemo.adapter.InformationGroupAdapter;
 import com.example.appchatdemo.databinding.ActivityGroupMessageBinding;
+import com.example.appchatdemo.interfaces.IClickItemFileInGroup;
 import com.example.appchatdemo.model.GroupMessageModel;
 import com.example.appchatdemo.model.GroupModel;
 import com.example.appchatdemo.model.UserModel;
@@ -41,7 +46,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -59,11 +63,11 @@ import java.util.List;
 public class GroupMessageActivity extends AppCompatActivity {
 
     private ActivityGroupMessageBinding binding;
-    FirebaseFirestore fireStore;
+    FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth;
 
     private String groupId, groupName, groupAvatar, message, yourId;
-    private int position, memberCount;
+    private int memberCount;
     private String userIdd;
     private GroupMessageViewModel groupMessageViewModel;
     List<GroupMessageModel> groupMessageModelList;
@@ -72,7 +76,10 @@ public class GroupMessageActivity extends AppCompatActivity {
     private String displayName;
     private final int IMAGE = 11, PDF = 22, DOCX = 33, FILE = 44;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
-    private Double capacity =  20971520.0; //5242880.0;
+    private Double capacity = 20971520.0; //5242880.0;
+    private ArrayList<String> listMember;
+    private List<UserModel> mUsers;
+    private InformationGroupAdapter informationGroupAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +88,6 @@ public class GroupMessageActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
-        fireStore = FirebaseFirestore.getInstance();
         yourId = firebaseAuth.getCurrentUser().getUid();
 
         binding.btnBackGroupMessage.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +101,13 @@ public class GroupMessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showFilePickDialog();
+            }
+        });
+
+        binding.imgAvatarGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogGroupInformation();
             }
         });
 
@@ -146,7 +159,66 @@ public class GroupMessageActivity extends AppCompatActivity {
             public void onChanged(List<GroupMessageModel> groupMessageModels) {
                 groupMessageAdapter.setGroupMessageModelList(groupMessageModels);
                 binding.rcvMessageGroup.setAdapter(groupMessageAdapter);
+            }
+        });
+    }
 
+    private void fetchingList(ArrayList<String> listMember) {
+
+    }
+
+    private void showDialogGroupInformation() {
+        AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.information_group));
+        View dialogLayout = LayoutInflater.from(this).inflate(R.layout.layout_member_information, null);
+        builder.setView(dialogLayout);
+        Button btnOK = dialogLayout.findViewById(R.id.btn_OK);
+        RecyclerView rcvMember = dialogLayout.findViewById(R.id.rcv_information_group);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        rcvMember.setLayoutManager(linearLayoutManager);
+
+
+
+        fireStore.collection("Groups").document(groupId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        listMember = (ArrayList<String>) documentSnapshot.get("memberList");
+                        mUsers = new ArrayList<>();
+                        fireStore.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                mUsers.clear();
+                                assert value != null;
+                                for (DocumentSnapshot ds : value.getDocuments()) {
+                                    UserModel userModel = ds.toObject(UserModel.class);
+                                    for (int i = 0; i < listMember.size(); i++) {
+                                        if (userModel.getUserId().equals(listMember.get(i))) {
+                                            mUsers.add(userModel);
+                                        }
+                                    }
+                                }
+                                informationGroupAdapter = new InformationGroupAdapter(GroupMessageActivity.this, mUsers);
+                                rcvMember.setAdapter(informationGroupAdapter);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.show();
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
     }

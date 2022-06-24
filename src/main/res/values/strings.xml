@@ -106,5 +106,7 @@
     <string name="no_internet">Mất kết nối mạng</string>
     <string name="check_internet">Vui lòng kiểm tra kết nối mạng của bạn</string>
     <string name="retry">Thử lại</string>
+    <string name="ok">OK</string>
+    <string name="information_group">Thông tin thành viên nhóm</string>
 
 </resources>

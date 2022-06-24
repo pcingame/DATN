@@ -162,7 +162,6 @@ public class PrivateMessageActivity extends AppCompatActivity {
 
         DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         if (downloadManager != null) {
-
             downloadManager.enqueue(request);
         }
     }

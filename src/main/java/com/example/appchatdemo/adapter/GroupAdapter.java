@@ -148,12 +148,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
                     } else {
                         if ("".equals(theLastGroupMessage)) {
                             last_msg.setText(theMember + ": đã gửi 1 tệp đính kèm");
-                            tvTime.setText(theLastTime);
                         } else {
                             last_msg.setText(theMember + ": " + theLastGroupMessage);
-                            tvTime.setText(theLastTime);
                         }
-
+                        tvTime.setText(theLastTime);
                     }
                 }
                 theLastGroupMessage = "default";

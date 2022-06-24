@@ -72,6 +72,7 @@ public class GroupMessageActivity extends AppCompatActivity {
     private String displayName;
     private final int IMAGE = 11, PDF = 22, DOCX = 33, FILE = 44;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
+    private Double capacity =  20971520.0; //5242880.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +156,7 @@ public class GroupMessageActivity extends AppCompatActivity {
                 "Ảnh",
                 "PDF",
                 "Docx",
-                "Khác"
+                "Exel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(GroupMessageActivity.this);
         builder.setTitle("Chọn loại file bạn muốn gửi");
@@ -186,8 +187,8 @@ public class GroupMessageActivity extends AppCompatActivity {
                 if (which == 3) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    intent.setType("*/*");
-                    startActivityForResult(Intent.createChooser(intent, "Chọn file khác"), FILE);
+                    intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    startActivityForResult(Intent.createChooser(intent, "Chọn file exel"), FILE);
                 }
             }
         });
@@ -262,7 +263,7 @@ public class GroupMessageActivity extends AppCompatActivity {
         if (requestCode == IMAGE && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             int rs = displayMediaFileMetaData(uri);
-            if (rs > 20971520) {
+            if (rs > capacity) {
                 Toast.makeText(GroupMessageActivity.this, getString(R.string.file_size), Toast.LENGTH_SHORT).show();
                 return;
             } else {
@@ -294,7 +295,7 @@ public class GroupMessageActivity extends AppCompatActivity {
         if (requestCode == PDF && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             int rs = displayMediaFileMetaData(uri);
-            if (rs > 20971520) {
+            if (rs > capacity) {
                 Toast.makeText(GroupMessageActivity.this, getString(R.string.file_size), Toast.LENGTH_SHORT).show();
                 return;
             } else {
@@ -328,7 +329,7 @@ public class GroupMessageActivity extends AppCompatActivity {
         if (requestCode == DOCX && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             int rs = displayMediaFileMetaData(uri);
-            if (rs > 20971520) {
+            if (rs > capacity) {
                 Toast.makeText(GroupMessageActivity.this, getString(R.string.file_size), Toast.LENGTH_SHORT).show();
                 return;
             } else {
@@ -361,7 +362,7 @@ public class GroupMessageActivity extends AppCompatActivity {
         if (requestCode == FILE && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             int rs = displayMediaFileMetaData(uri);
-            if (rs > 20971520) {
+            if (rs > capacity) {
                 Toast.makeText(GroupMessageActivity.this, getString(R.string.file_size), Toast.LENGTH_SHORT).show();
                 return;
             } else {

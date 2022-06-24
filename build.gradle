@@ -81,6 +81,8 @@ dependencies {
 
     //picasso library
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'gun0912.ted:tedbottompicker:2.0.1'
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
 
 
 }

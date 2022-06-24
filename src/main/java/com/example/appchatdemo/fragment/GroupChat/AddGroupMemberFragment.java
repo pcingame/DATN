@@ -1,16 +1,17 @@
 package com.example.appchatdemo.fragment.GroupChat;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,9 +26,13 @@ import com.example.appchatdemo.interfaces.IClickCheckboxListener;
 import com.example.appchatdemo.model.UserModel;
 import com.example.appchatdemo.viewmodel.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.SimpleDateFormat;
@@ -47,10 +52,10 @@ public class AddGroupMemberFragment extends Fragment {
     private FirebaseFirestore firestore;
     private ListGroupMemberAdapter listGroupMemberAdapter;
     private UserViewModel userViewModel;
-    private List<UserModel> userList;
     private SearchView searchView;
     private String imgLinkDefaultAvatar = "https://firebasestorage.googleapis.com/v0/b/appmiochat.appspot.com/o/Photos%2Fd0742ce2f56f4d7ea522a9149e4b8658.png?alt=media&token=044fbbae-c5f0-4e4f-81d5-0cd31c50abc1";
     private List<String> listmember;
+    private String pathLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,18 +83,21 @@ public class AddGroupMemberFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         String takeName = bundle.getString("groupName");
-
+        String takeAvatar = bundle.getString("groupAvatar");
+        Uri uri = Uri.parse(bundle.getString("uri"));
+        pathLocation = takeAvatar;
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
         btnBack = view.findViewById(R.id.btn_back_member);
         btnCreateGroup = view.findViewById(R.id.btn_accepted);
-        navController = Navigation.findNavController(view);
+        searchView = view.findViewById(R.id.edt_search_member);
+        navController = Navigation.findNavController(requireView());
 
         rcvUser = view.findViewById(R.id.rv_list_member);
         rcvUser.setHasFixedSize(true);
         rcvUser.setLayoutManager(new LinearLayoutManager(getContext()));
-        userList = new ArrayList<>();
+
 
         listGroupMemberAdapter = new ListGroupMemberAdapter(getContext(), new IClickCheckboxListener() {
             @Override
@@ -97,6 +105,7 @@ public class AddGroupMemberFragment extends Fragment {
                 listmember = new ArrayList<>(arrayList);
             }
         });
+
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(requireActivity().getApplication())).get(UserViewModel.class);
 
@@ -105,12 +114,13 @@ public class AddGroupMemberFragment extends Fragment {
             public void onChanged(List<UserModel> userModels) {
                 listGroupMemberAdapter.setUserModelList(userModels);
                 rcvUser.setAdapter(listGroupMemberAdapter);
+                rcvUser.setItemViewCacheSize(userModels.size());
                 if (listGroupMemberAdapter != null) {
                     listGroupMemberAdapter.notifyItemInserted(0);
-                    listGroupMemberAdapter.notifyDataSetChanged();
                 }
             }
         });
+
 
         btnCreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +137,9 @@ public class AddGroupMemberFragment extends Fragment {
                     group.put("groupId", currentTime + ": " + takeName);
                     group.put("groupName", takeName);
                     group.put("host", auth.getCurrentUser().getUid());
-                    group.put("groupAvatar", imgLinkDefaultAvatar);
+                    if (uri != null) {
+                        group.put("groupAvatar", uri.toString());
+                    } else group.put("groupAvatar", imgLinkDefaultAvatar);
                     group.put("lastMessageGroupTime", date);
                     for (int i = 0; i < listmember.size(); i++) {
                         group.put("memberList", Arrays.asList(listmember.toArray()));
@@ -140,16 +152,43 @@ public class AddGroupMemberFragment extends Fragment {
                         }
                     });
 
+                    if (!pathLocation.equals("")) {
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference(pathLocation);
+                        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                                task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+
+                                    }
+                                });
+                            }
+                        });
+                    }
+
                     FancyToast.makeText(getContext(), getString(R.string.create_group_success), Toast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                     getActivity().finish();
                 }
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+
+        btnBack.setOnClickListener(view1 -> navController.navigate(R.id.action_addGroupMemberFragment_to_addGroupNameFragment));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_addGroupMemberFragment_to_addGroupNameFragment);
+            public boolean onQueryTextSubmit(String query) {
+                listGroupMemberAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //called as and when type even a sigle letter
+                listGroupMemberAdapter.getFilter().filter(newText);
+                return false;
             }
         });
     }

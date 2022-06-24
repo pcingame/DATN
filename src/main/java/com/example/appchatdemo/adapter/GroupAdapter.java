@@ -40,6 +40,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
 
     private String theLastGroupMessage;
     private String theLastTime;
+    private String theMember;
+    private String myId;
 
     public GroupAdapter(Context mContext, IClickItemGroupListener iClickItemGroupListener) {
         this.mContext = mContext;
@@ -84,15 +86,14 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
 
     @Override
     public int getItemCount() {
-        if (groupModelList == null){
+        if (groupModelList == null) {
             return 0;
-        }
-        else {
+        } else {
             return groupModelList.size();
         }
     }
 
-    public class MyGroupHolder extends RecyclerView.ViewHolder{
+    public class MyGroupHolder extends RecyclerView.ViewHolder {
         private CircleImageView groupImg;
         private TextView groupName, groupNewest, tvTime;
         private RelativeLayout layout;
@@ -108,9 +109,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
         }
     }
 
-    private void lastMessage(final String groupId,  final TextView last_msg, TextView tvTime) {
+    private void lastMessage(final String groupId, final TextView last_msg, TextView tvTime) {
         theLastGroupMessage = "default";
         theLastTime = "";
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
         String userId = auth.getCurrentUser().getUid();
@@ -125,24 +127,38 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyGroupHolde
                     GroupMessageModel groupMessageModel = ds.toObject(GroupMessageModel.class);
                     if (groupMessageModel != null) {
                         if (groupMessageModel.getReceiver().equals(groupId)) {
-                            theLastGroupMessage = groupMessageModel.getMemberName() + ": " + groupMessageModel.getMessage();
+                            theMember = groupMessageModel.getMemberName();
+                            theLastGroupMessage = groupMessageModel.getMessage();
                             theLastTime = groupMessageModel.getTime();
+                            myId = groupMessageModel.getSender();
                         }
                     }
                 }
-                switch (theLastGroupMessage) {
-                    case "default":
-                        last_msg.setText("No Message");
-                        tvTime.setText("");
-                        break;
-
-                    default:
-                        last_msg.setText(theLastGroupMessage);
+                if ("default".equals(theLastGroupMessage)) {
+                    last_msg.setText("No Message");
+                    tvTime.setText("");
+                } else {
+                    if (myId.equals(userId)) {
+                        if ("".equals(theLastGroupMessage)) {
+                            last_msg.setText("Bạn" + ": đã gửi 1 tệp đính kèm");
+                        } else {
+                            last_msg.setText("Bạn" + ": " + theLastGroupMessage);
+                        }
                         tvTime.setText(theLastTime);
-                        break;
+                    } else {
+                        if ("".equals(theLastGroupMessage)) {
+                            last_msg.setText(theMember + ": đã gửi 1 tệp đính kèm");
+                            tvTime.setText(theLastTime);
+                        } else {
+                            last_msg.setText(theMember + ": " + theLastGroupMessage);
+                            tvTime.setText(theLastTime);
+                        }
+
+                    }
                 }
                 theLastGroupMessage = "default";
             }
+
         });
     }
 }

@@ -71,6 +71,35 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
         holder.tvShowMessage.setVisibility(View.VISIBLE);
         holder.tvTime.setVisibility(View.VISIBLE);
         holder.tvShowMessage.setText(groupMessageModelList.get(position).getMessage());
+        if (groupMessageModelList.get(position).getFileType().equals("image")) {
+            holder.imgMessage.setVisibility(View.VISIBLE);
+            holder.tvShowMessage.setVisibility(View.GONE);
+            Glide.with(holder.itemView.getContext()).load(groupMessageModelList.get(position).getFile()).centerCrop().into(holder.imgMessage);
+        }
+
+        if (groupMessageModelList.get(position).getFileType().equals("pdf")) {
+            holder.layoutFile.setVisibility(View.VISIBLE);
+            holder.tvShowMessage.setVisibility(View.GONE);
+            holder.tvFileName.setVisibility(View.VISIBLE);
+            holder.tvFileName.setText(groupMessageModelList.get(position).getFileName());
+            holder.imgFile.setImageResource(R.drawable.pdf);
+        }
+
+        if (groupMessageModelList.get(position).getFileType().equals("docx")) {
+            holder.layoutFile.setVisibility(View.VISIBLE);
+            holder.tvShowMessage.setVisibility(View.GONE);
+            holder.tvFileName.setVisibility(View.VISIBLE);
+            holder.tvFileName.setText(groupMessageModelList.get(position).getFileName());
+            holder.imgFile.setImageResource(R.drawable.word);
+        }
+
+        if (groupMessageModelList.get(position).getFileType().equals("other")) {
+            holder.layoutFile.setVisibility(View.VISIBLE);
+            holder.tvShowMessage.setVisibility(View.GONE);
+            holder.tvFileName.setVisibility(View.VISIBLE);
+            holder.tvFileName.setText(groupMessageModelList.get(position).getFileName());
+            holder.imgFile.setImageResource(R.drawable.file);
+        }
         holder.tvTime.setText(groupMessageModelList.get(position).getTime());
         holder.tvMemberName.setText(messageModel.getMemberName());
         Glide.with(holder.itemView.getContext()).load(messageModel.getAvatarLink()).centerCrop().into(holder.imgAvatar);

@@ -44,6 +44,8 @@
                 app:layout_constraintLeft_toRightOf="@id/imgGroupN"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:maxLength="30"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textStyle="normal"
                 android:textColor="@color/background_app"
                 android:textSize="16sp" />

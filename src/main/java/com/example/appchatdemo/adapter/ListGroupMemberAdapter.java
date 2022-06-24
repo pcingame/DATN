@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,8 +22,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ListGroupMemberAdapter extends RecyclerView.Adapter<ListGroupMemberAdapter.GroupMemberHolder> {
+public class ListGroupMemberAdapter extends RecyclerView.Adapter<ListGroupMemberAdapter.GroupMemberHolder> implements Filterable {
     private List<UserModel> userModelList;
+    private List<UserModel> userListOld;
     private Context mContext;
     private ArrayList<String> listMember = new ArrayList<>();
     private IClickCheckboxListener checkboxListener;
@@ -33,7 +36,7 @@ public class ListGroupMemberAdapter extends RecyclerView.Adapter<ListGroupMember
 
     public void setUserModelList(List<UserModel> userModelList) {
         this.userModelList = userModelList;
-        notifyDataSetChanged();
+        this.userListOld = userModelList;
     }
 
     @NonNull
@@ -54,16 +57,14 @@ public class ListGroupMemberAdapter extends RecyclerView.Adapter<ListGroupMember
         Glide.with(holder.itemView.getContext()).load(userModelList.get(position).getImageUrl()).centerCrop().into(holder.memberAvatar);
         holder.memberName.setText(userModel.getUsername());
         holder.memberEmail.setText(userModel.getEmail());
-        holder.memberCheckbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.memberCheckbox.isChecked()) {
-                    listMember.add(userModel.getUserId());
-                } else {
-                    listMember.remove(userModel.getUserId());
-                }
-                checkboxListener.onCheckboxMemberListener(listMember);
+
+        holder.memberCheckbox.setOnClickListener(v -> {
+            if (holder.memberCheckbox.isChecked()) {
+                listMember.add(userModel.getUserId());
+            } else {
+                listMember.remove(userModel.getUserId());
             }
+            checkboxListener.onCheckboxMemberListener(listMember);
         });
     }
 
@@ -90,5 +91,37 @@ public class ListGroupMemberAdapter extends RecyclerView.Adapter<ListGroupMember
             memberEmail = itemView.findViewById(R.id.member_email);
             memberCheckbox = itemView.findViewById(R.id.member_checkbox);
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strSearch = charSequence.toString();
+                if (strSearch.isEmpty()) {
+                    userModelList = userListOld;
+                } else {
+                    List<UserModel> list = new ArrayList<>();
+                    for (UserModel userModel : userListOld) {
+                        if (userModel.getUsername().toLowerCase().contains(strSearch.toLowerCase())) {
+                            list.add(userModel);
+                        }
+                    }
+                    userModelList = list;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = userModelList;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                userModelList = (List<UserModel>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }

@@ -29,6 +29,7 @@ public class CreateGroupChatActivity extends AppCompatActivity {
 
     public void setIsOnline(String isOnline) {
         FirebaseUser userOfFirebase = FirebaseAuth.getInstance().getCurrentUser();
+        fireStore =  FirebaseFirestore.getInstance();
         if (userOfFirebase != null) {
             userIdd = userOfFirebase.getUid();
         }

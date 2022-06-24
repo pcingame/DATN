@@ -90,7 +90,7 @@ public class PrivateMessageAdapter extends RecyclerView.Adapter<PrivateMessageAd
             holder.tvShowMessage.setVisibility(View.GONE);
             holder.tvFileName.setVisibility(View.VISIBLE);
             holder.tvFileName.setText(privateMessageModelList.get(position).getFileName());
-            holder.imgFile.setImageResource(R.drawable.file1);
+            holder.imgFile.setImageResource(R.drawable.fileexel);
         }
 
         holder.layoutFile.setOnClickListener(new View.OnClickListener() {

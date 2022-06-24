@@ -90,7 +90,7 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
             holder.tvShowMessage.setVisibility(View.GONE);
             holder.tvFileName.setVisibility(View.VISIBLE);
             holder.tvFileName.setText(groupMessageModelList.get(position).getFileName());
-            holder.imgFile.setImageResource(R.drawable.file1);
+            holder.imgFile.setImageResource(R.drawable.fileexel);
         }
         holder.tvTime.setText(groupMessageModelList.get(position).getTime());
         holder.tvMemberName.setText(messageModel.getMemberName());
